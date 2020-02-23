@@ -1,35 +1,35 @@
-import numpy as np
-import math
-from Vehicle import *
-from Functions import *
+from PyQt5.QtGui import *
+from PyQt5.QtCore import *
 
-# pre equations
-mass = construction()[0]
-coef_friction = tires()[0]
-alpha_Cl = alpha_downforce()[0]
-alpha_Cd = alpha_drag()
-CP = alpha_downforce()[1]
-CG = construction()[4]
-KF = 0  # which axis is driven, front equals zero
-KR = 1
-g = 9.81
-a = construction()[1]
-b = construction()[2]
-height_CG = construction()[3]
-wheelbase = construction()[5]
-CoPy = CP / 100 * wheelbase
-CoPz = alpha_downforce()[2]
-track_width = construction()[7]
-w = drive_train()[0]*2
-W = construction()[8]
-d = construction()[7]
+import sys
+
+from PyQt5.QtWidgets import QListWidget, QMessageBox, QApplication
 
 
-radius = 8.125
-vx_entry = 9.669
+class myListWidget(QListWidget):
 
-k = normal_force_front_inner(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase, CoPy=CoPy,
-                                         alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=d, v=vx_entry)/normal_force_front_outer(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase, CoPy=CoPy,
-                                         alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=d, v=vx_entry)
+    def Clicked(self, item):
+        QMessageBox.information(self, "ListWidget", "You clicked: " + item.text())
 
-print(k)
+
+def main():
+    app = QApplication(sys.argv)
+    listWidget = myListWidget()
+
+    # Resize width and height
+    listWidget.resize(300, 120)
+
+    listWidget.addItem("Item 1")
+    listWidget.addItem("Item 2")
+    listWidget.addItem("Item 3")
+    listWidget.addItem("Item 4")
+
+    listWidget.setWindowTitle('PyQT QListwidget Demo')
+    listWidget.itemClicked.connect(listWidget.Clicked)
+
+    listWidget.show()
+    sys.exit(app.exec_())
+
+
+if __name__ == '__main__':
+    main()

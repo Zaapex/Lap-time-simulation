@@ -32,7 +32,7 @@
      </font>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>6</number>
     </property>
     <widget class="QWidget" name="Simulation">
      <property name="font">
@@ -56,7 +56,7 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap>20190618_124946_002.jpg</pixmap>
+       <pixmap>Photos/Capture.PNG</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -74,7 +74,7 @@
       <property name="title">
        <string>INFO</string>
       </property>
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="author">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -87,7 +87,7 @@
         <string>Author</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="date">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -100,7 +100,7 @@
         <string>Date</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="name_of_sim">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -113,7 +113,7 @@
         <string>Name of Simulation</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_4">
+      <widget class="QLabel" name="note">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -136,7 +136,7 @@
         </rect>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit">
+      <widget class="QLineEdit" name="name_lineEdit">
        <property name="geometry">
         <rect>
          <x>140</x>
@@ -149,7 +149,7 @@
         <string>Name and Surname</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_2">
+      <widget class="QLineEdit" name="name_of_sim_Edit">
        <property name="geometry">
         <rect>
          <x>200</x>
@@ -158,8 +158,11 @@
          <height>22</height>
         </rect>
        </property>
+       <property name="text">
+        <string>Name</string>
+       </property>
       </widget>
-      <widget class="QTextEdit" name="textEdit">
+      <widget class="QTextEdit" name="write_box">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -177,10 +180,10 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </widget>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="simulateButton">
       <property name="geometry">
        <rect>
-        <x>60</x>
+        <x>50</x>
         <y>470</y>
         <width>191</width>
         <height>81</height>
@@ -190,7 +193,7 @@ p, li { white-space: pre-wrap; }
        <string>Simulate</string>
       </property>
      </widget>
-     <widget class="QComboBox" name="comboBox">
+     <widget class="QComboBox" name="data_download_Box">
       <property name="geometry">
        <rect>
         <x>340</x>
@@ -210,7 +213,7 @@ p, li { white-space: pre-wrap; }
        </property>
       </item>
      </widget>
-     <widget class="QPushButton" name="pushButton_3">
+     <widget class="QPushButton" name="exportButton">
       <property name="geometry">
        <rect>
         <x>550</x>
@@ -228,44 +231,659 @@ p, li { white-space: pre-wrap; }
      <attribute name="title">
       <string>Track</string>
      </attribute>
-     <widget class="QPushButton" name="pushButton_2">
+     <widget class="QPushButton" name="loadtrackButton">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>50</y>
-        <width>93</width>
-        <height>28</height>
+        <x>50</x>
+        <y>480</y>
+        <width>171</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="text">
-       <string>PushBASSutton</string>
+       <string>Load track</string>
       </property>
+     </widget>
+     <widget class="QLabel" name="select_track">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>80</y>
+        <width>151</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Select track</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="track_photo">
+      <property name="geometry">
+       <rect>
+        <x>500</x>
+        <y>130</y>
+        <width>391</width>
+        <height>331</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>Photos/Capture.PNG</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>120</y>
+        <width>301</width>
+        <height>331</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>299</width>
+         <height>329</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <widget class="QListWidget" name="listWidget">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>311</width>
+          <height>331</height>
+         </rect>
+        </property>
+        <item>
+         <property name="text">
+          <string>Acceleration</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Skidpad</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>FSG 2012 Autocross</string>
+         </property>
+        </item>
+       </widget>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="Basic">
      <attribute name="title">
       <string>Basic</string>
      </attribute>
+     <widget class="QFrame" name="Basic_frame">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>10</y>
+        <width>1041</width>
+        <height>581</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QTableWidget" name="tableWidget">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>370</width>
+         <height>551</height>
+        </rect>
+       </property>
+       <row>
+        <property name="text">
+         <string notr="true">Center of CG x</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Center of CG y</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Center of CG z</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Mass</string>
+        </property>
+       </row>
+       <column>
+        <property name="text">
+         <string>Value</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Unit</string>
+        </property>
+       </column>
+      </widget>
+      <widget class="QTextEdit" name="textEdit">
+       <property name="geometry">
+        <rect>
+         <x>530</x>
+         <y>60</y>
+         <width>451</width>
+         <height>231</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="explanation_basic">
+       <property name="geometry">
+        <rect>
+         <x>530</x>
+         <y>20</y>
+         <width>131</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Explanation</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="save_basic_Button">
+       <property name="geometry">
+        <rect>
+         <x>530</x>
+         <y>320</y>
+         <width>171</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Save</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="load_basic_Button">
+       <property name="geometry">
+        <rect>
+         <x>720</x>
+         <y>320</y>
+         <width>191</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Load</string>
+       </property>
+      </widget>
+     </widget>
     </widget>
     <widget class="QWidget" name="Suspension">
      <attribute name="title">
       <string>Suspension</string>
      </attribute>
+     <widget class="QFrame" name="Basic_frame_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>1041</width>
+        <height>581</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QTableWidget" name="tableWidget_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>370</width>
+         <height>551</height>
+        </rect>
+       </property>
+       <row>
+        <property name="text">
+         <string notr="true">Center of CG x</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Center of CG y</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Center of CG z</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Mass</string>
+        </property>
+       </row>
+       <column>
+        <property name="text">
+         <string>Value</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Unit</string>
+        </property>
+       </column>
+      </widget>
+      <widget class="QTextEdit" name="textEdit_2">
+       <property name="geometry">
+        <rect>
+         <x>530</x>
+         <y>60</y>
+         <width>451</width>
+         <height>231</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="explanation_basic_2">
+       <property name="geometry">
+        <rect>
+         <x>530</x>
+         <y>20</y>
+         <width>131</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Explanation</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="save_basic_Button_2">
+       <property name="geometry">
+        <rect>
+         <x>530</x>
+         <y>320</y>
+         <width>171</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Save</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="load_basic_Button_2">
+       <property name="geometry">
+        <rect>
+         <x>720</x>
+         <y>320</y>
+         <width>191</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Load</string>
+       </property>
+      </widget>
+     </widget>
     </widget>
     <widget class="QWidget" name="Aerodynamics">
      <attribute name="title">
       <string>Aerodynamics</string>
      </attribute>
+     <widget class="QFrame" name="Basic_frame_3">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>1041</width>
+        <height>581</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QTableWidget" name="tableWidget_3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>370</width>
+         <height>551</height>
+        </rect>
+       </property>
+       <row>
+        <property name="text">
+         <string notr="true">Center of CG x</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Center of CG y</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Center of CG z</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Mass</string>
+        </property>
+       </row>
+       <column>
+        <property name="text">
+         <string>Value</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Unit</string>
+        </property>
+       </column>
+      </widget>
+      <widget class="QTextEdit" name="textEdit_3">
+       <property name="geometry">
+        <rect>
+         <x>530</x>
+         <y>60</y>
+         <width>451</width>
+         <height>231</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="explanation_basic_3">
+       <property name="geometry">
+        <rect>
+         <x>530</x>
+         <y>20</y>
+         <width>131</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Explanation</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="save_basic_Button_3">
+       <property name="geometry">
+        <rect>
+         <x>530</x>
+         <y>320</y>
+         <width>171</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Save</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="load_basic_Button_3">
+       <property name="geometry">
+        <rect>
+         <x>720</x>
+         <y>320</y>
+         <width>191</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Load</string>
+       </property>
+      </widget>
+     </widget>
     </widget>
     <widget class="QWidget" name="Drivetrain">
      <attribute name="title">
       <string>Drivetrain</string>
      </attribute>
+     <widget class="QFrame" name="Basic_frame_4">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>1041</width>
+        <height>581</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QTableWidget" name="tableWidget_4">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>370</width>
+         <height>551</height>
+        </rect>
+       </property>
+       <row>
+        <property name="text">
+         <string notr="true">Center of CG x</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Center of CG y</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Center of CG z</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Mass</string>
+        </property>
+       </row>
+       <column>
+        <property name="text">
+         <string>Value</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Unit</string>
+        </property>
+       </column>
+      </widget>
+      <widget class="QTextEdit" name="textEdit_4">
+       <property name="geometry">
+        <rect>
+         <x>530</x>
+         <y>60</y>
+         <width>451</width>
+         <height>231</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="explanation_basic_4">
+       <property name="geometry">
+        <rect>
+         <x>530</x>
+         <y>20</y>
+         <width>131</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Explanation</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="save_basic_Button_4">
+       <property name="geometry">
+        <rect>
+         <x>530</x>
+         <y>320</y>
+         <width>171</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Save</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="load_basic_Button_4">
+       <property name="geometry">
+        <rect>
+         <x>720</x>
+         <y>320</y>
+         <width>191</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Load</string>
+       </property>
+      </widget>
+     </widget>
     </widget>
     <widget class="QWidget" name="Electronics">
      <attribute name="title">
       <string>Electronics</string>
      </attribute>
+     <widget class="QFrame" name="Basic_frame_5">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>1041</width>
+        <height>581</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QTableWidget" name="tableWidget_5">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>370</width>
+         <height>551</height>
+        </rect>
+       </property>
+       <row>
+        <property name="text">
+         <string notr="true">Center of CG x</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Center of CG y</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Center of CG z</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Mass</string>
+        </property>
+       </row>
+       <column>
+        <property name="text">
+         <string>Value</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Unit</string>
+        </property>
+       </column>
+      </widget>
+      <widget class="QTextEdit" name="textEdit_5">
+       <property name="geometry">
+        <rect>
+         <x>530</x>
+         <y>60</y>
+         <width>451</width>
+         <height>231</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="explanation_basic_5">
+       <property name="geometry">
+        <rect>
+         <x>530</x>
+         <y>20</y>
+         <width>131</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Explanation</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="save_basic_Button_5">
+       <property name="geometry">
+        <rect>
+         <x>530</x>
+         <y>320</y>
+         <width>171</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Save</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="load_basic_Button_5">
+       <property name="geometry">
+        <rect>
+         <x>720</x>
+         <y>320</y>
+         <width>191</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Load</string>
+       </property>
+      </widget>
+     </widget>
     </widget>
     <widget class="QWidget" name="View">
      <attribute name="title">
@@ -287,10 +905,34 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionNew"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionOpen"/>
+    <addaction name="actionExit"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionNew">
+   <property name="text">
+    <string>New</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
