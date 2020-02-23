@@ -1,0 +1,71 @@
+"""d = {'Tx': [0], 'Ty': [0], "Cx": [df["Radius"][0]], "Cy": [0]}
+df2 = pd.DataFrame(data=d)
+
+
+for x in range(len(df.index) - 1):
+    fi = np.pi - df["Length"][x]/df["Radius"][x] + df["kot"][x]
+    df.at[x + 1, "kot"] = -(-df["kot"][x] + df["Length"][x]/df["Radius"][x])
+    v1 = [df2["Cx"][x] - df2["Tx"][x], df2["Cy"][x] - df2["Ty"][x]]
+    u1 = [v1[0] * np.cos(fi) - v1[1] * np.sin(fi),
+          v1[0] * np.sin(fi) + v1[1] * np.cos(fi)]
+    T2 = [u1[0] + df2["Cx"][x], u1[1] + df2["Cy"][x]]
+
+    df2.at[x + 1, "Tx"] = T2[0]
+    df2.at[x + 1, "Ty"] = T2[1]
+
+    C2 = np.array(
+        [T2[0] - u1[0]*df["Radius"][x + 1] / df["Radius"][x], T2[1] - u1[1] * df["Radius"][x + 1] / df["Radius"][x]])
+
+    df2.at[x + 1, "Cx"] = C2[0]
+    df2.at[x + 1, "Cy"] = C2[1]
+
+print(df2)"""
+# 1 == desno, -1 == levo, karkoli drugega == undefined behaviour
+"""smer = [1, -1, 1]
+radij = [10, 10, 5]
+dolzina = [10 * math.pi / 2, 10 * math.pi / 2, 5 * math.pi / 1]"""
+
+"""smer = []
+radij = []
+dolzina = []
+
+for x in range(len(df.index)):
+    if df["Turn"][x] == "Right":
+        smer.append(1)
+        radij.append(df["Radius"][x])
+        dolzina.append(df["Length"][x])
+    elif df["Turn"][x] == "Left":
+        smer.append(-1)
+        radij.append(df["Radius"][x])
+        dolzina.append(df["Length"][x])
+    elif df["Turn"][x] == "Straight":
+        smer.append(1)
+        radij.append(10000)
+        dolzina.append(df["Length"][x])
+
+# zacetna lokacija
+pos = 0 + 0j
+
+# zacetna hitrost
+vel = 0 + 1j"""
+
+"""print(pos)
+print(vel)
+print()"""
+
+"""for i in range(len(smer)):
+    # slavna formula: obseg == kot * radij
+    kot = smer[i] * dolzina[i] / radij[i]
+
+    # se ena slavna formula: e^(i phi) == sin icos neki
+    pivot1 = smer[i] * radij[i] * vel * -1j
+    pivot2 = -pivot1 * pow(math.e, -1j * kot)
+
+    new_pos = pos + pivot1 + pivot2
+    new_vel = vel * pow(math.e, -1j * kot)
+
+    pos = new_pos
+    vel = new_vel
+
+    #print(vel)
+    #print()"""
