@@ -8,6 +8,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMessageBox, QTableWidgetItem
 
 
 class Ui_MainWindow(object):
@@ -89,7 +90,6 @@ class Ui_MainWindow(object):
         self.select_track = QtWidgets.QLabel(self.Track)
         self.select_track.setGeometry(QtCore.QRect(50, 80, 151, 31))
         self.select_track.setObjectName("select_track")
-        self.loadtrackButton.clicked.connect(self.load_track_clicked)
         self.track_photo = QtWidgets.QLabel(self.Track)
         self.track_photo.setGeometry(QtCore.QRect(500, 130, 391, 331))
         self.track_photo.setText("")
@@ -119,10 +119,10 @@ class Ui_MainWindow(object):
         item = QtWidgets.QListWidgetItem()
         self.listWidget.addItem(item)
         self.listWidget.itemClicked.connect(self.track_cliked)
-
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.menuWidget.addTab(self.Track, "")
 
+        # basic widget
         self.Basic = QtWidgets.QWidget()
         self.Basic.setObjectName("Basic")
         self.Basic_frame = QtWidgets.QFrame(self.Basic)
@@ -137,6 +137,7 @@ class Ui_MainWindow(object):
         self.tableWidget.setRowCount(4)
         item = QtWidgets.QTableWidgetItem()
         item.setText("Center of CG x")
+        self.tableWidget.setItem(-1, 2, QTableWidgetItem("100"))
         self.tableWidget.setVerticalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setVerticalHeaderItem(1, item)
@@ -161,6 +162,7 @@ class Ui_MainWindow(object):
         self.load_basic_Button.setGeometry(QtCore.QRect(720, 320, 191, 81))
         self.load_basic_Button.setObjectName("load_basic_Button")
         self.menuWidget.addTab(self.Basic, "")
+
         self.Suspension = QtWidgets.QWidget()
         self.Suspension.setObjectName("Suspension")
         self.Basic_frame_2 = QtWidgets.QFrame(self.Suspension)
@@ -465,10 +467,11 @@ class Ui_MainWindow(object):
         return track
 
     def load_track_clicked(self):
-            track = 1
-            print(track)
+        msg = QMessageBox()
+        msg.setText("You track was loaded")
+        msg.setWindowTitle("Track loaded")
 
-
+        x = msg.exec_()
 
 if __name__ == "__main__":
     import sys
