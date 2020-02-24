@@ -2,22 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3cb1a221-99d2-40e2-ae59-b846aa0de236" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/20190618_124946_002.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Acc.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FSAE Germany 2012.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FSAE_track" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FSG2012.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FSG_Layout" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI.ui" beforeDir="false" afterPath="$PROJECT_DIR$/GUI.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG_20190418_202435.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Skidpad" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Skidpad.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test_short" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test_short.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/_DSC0425.JPG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/tester.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lib/site-packages/PyQt5-stubs/QtWidgets.pyi" beforeDir="false" afterPath="$PROJECT_DIR$/Lib/site-packages/PyQt5-stubs/QtWidgets.pyi" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Photos/20190618_124946_002.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Photos/_DSC0425.JPG" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -56,7 +45,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.tester">
+  <component name="RunManager" selected="Python.GUI">
     <configuration name="Acc.csv.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/Four wheels/Acc.csv.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
@@ -150,8 +139,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.tester" />
         <item itemvalue="Python.GUI" />
+        <item itemvalue="Python.tester" />
         <item itemvalue="Python.uporabnik" />
         <item itemvalue="Python.Code" />
         <item itemvalue="JavaScript Debug.Acc.csv.html" />
@@ -198,7 +187,9 @@
       <workItem from="1581530117863" duration="1164000" />
       <workItem from="1581757581379" duration="119000" />
       <workItem from="1582444332013" duration="8313000" />
-      <workItem from="1582474477870" duration="1777000" />
+      <workItem from="1582474477870" duration="2511000" />
+      <workItem from="1582552616947" duration="41000" />
+      <workItem from="1582552703975" duration="5149000" />
     </task>
     <servers />
   </component>
@@ -210,7 +201,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
@@ -218,7 +211,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Four_wheels$uporabnik.coverage" NAME="uporabnik Coverage Results" MODIFIED="1582453373397" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Four_wheels$GUI.coverage" NAME="GUI Coverage Results" MODIFIED="1582474675287" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Four_wheels$GUI.coverage" NAME="GUI Coverage Results" MODIFIED="1582557914593" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Four_wheels$tester.coverage" NAME="tester Coverage Results" MODIFIED="1582476078541" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Four_wheels$Code.coverage" NAME="Code Coverage Results" MODIFIED="1581757586498" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>

@@ -14,8 +14,10 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1080, 754)
+
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+
         self.menuWidget = QtWidgets.QTabWidget(self.centralwidget)
         self.menuWidget.setEnabled(True)
         self.menuWidget.setGeometry(QtCore.QRect(0, 0, 1080, 720))
@@ -23,6 +25,8 @@ class Ui_MainWindow(object):
         font.setPointSize(14)
         self.menuWidget.setFont(font)
         self.menuWidget.setObjectName("menuWidget")
+
+        # simulation widget
         self.Simulation = QtWidgets.QWidget()
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -64,6 +68,7 @@ class Ui_MainWindow(object):
         self.simulateButton = QtWidgets.QPushButton(self.Simulation)
         self.simulateButton.setGeometry(QtCore.QRect(50, 470, 191, 81))
         self.simulateButton.setObjectName("simulateButton")
+        self.simulateButton.clicked.connect(self.clickedinfo)
         self.data_download_Box = QtWidgets.QComboBox(self.Simulation)
         self.data_download_Box.setGeometry(QtCore.QRect(340, 470, 201, 81))
         self.data_download_Box.setObjectName("data_download_Box")
@@ -73,14 +78,18 @@ class Ui_MainWindow(object):
         self.exportButton.setGeometry(QtCore.QRect(550, 470, 171, 81))
         self.exportButton.setObjectName("exportButton")
         self.menuWidget.addTab(self.Simulation, "")
+
+        # track widget
         self.Track = QtWidgets.QWidget()
         self.Track.setObjectName("Track")
         self.loadtrackButton = QtWidgets.QPushButton(self.Track)
         self.loadtrackButton.setGeometry(QtCore.QRect(50, 480, 171, 51))
         self.loadtrackButton.setObjectName("loadtrackButton")
+        self.loadtrackButton.clicked.connect(self.load_track_clicked)
         self.select_track = QtWidgets.QLabel(self.Track)
         self.select_track.setGeometry(QtCore.QRect(50, 80, 151, 31))
         self.select_track.setObjectName("select_track")
+        self.loadtrackButton.clicked.connect(self.load_track_clicked)
         self.track_photo = QtWidgets.QLabel(self.Track)
         self.track_photo.setGeometry(QtCore.QRect(500, 130, 391, 331))
         self.track_photo.setText("")
@@ -109,8 +118,11 @@ class Ui_MainWindow(object):
         self.listWidget.addItem(item)
         item = QtWidgets.QListWidgetItem()
         self.listWidget.addItem(item)
+        self.listWidget.itemClicked.connect(self.track_cliked)
+
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.menuWidget.addTab(self.Track, "")
+
         self.Basic = QtWidgets.QWidget()
         self.Basic.setObjectName("Basic")
         self.Basic_frame = QtWidgets.QFrame(self.Basic)
@@ -440,6 +452,22 @@ class Ui_MainWindow(object):
         self.actionSave.setText(_translate("MainWindow", "Save"))
         self.actionOpen.setText(_translate("MainWindow", "Open"))
         self.actionExit.setText(_translate("MainWindow", "Exit"))
+
+    def clickedinfo(self):
+        print(self.name_lineEdit.text())
+        print(self.dateTimeEdit.text())
+        print(self.name_of_sim_Edit.text())
+        print(self.write_box.text())
+
+    def track_cliked(self, item):
+        track = item.text()
+        self.track_photo.setPixmap(QtGui.QPixmap("Photos/" + str(track) + ".jpg"))
+        return track
+
+    def load_track_clicked(self):
+            track = 1
+            print(track)
+
 
 
 if __name__ == "__main__":
