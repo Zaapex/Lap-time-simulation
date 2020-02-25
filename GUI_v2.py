@@ -8,12 +8,13 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QMessageBox, QTableWidgetItem
+from PyQt5.QtWidgets import QMessageBox, QTableWidgetItem, QFileDialog
 import pandas as pd
 
-df = pd.read_csv("Svarog data")
-selected_track = ["None"]
 
+selected_track = ["None"]
+selected_settings = ["Svarog data"]
+df = pd.read_csv(selected_settings[0])
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -180,6 +181,7 @@ class Ui_MainWindow(object):
         self.load_basic_Button = QtWidgets.QPushButton(self.Basic_frame)
         self.load_basic_Button.setGeometry(QtCore.QRect(720, 320, 191, 81))
         self.load_basic_Button.setObjectName("load_basic_Button")
+        self.load_basic_Button.clicked.connect(self.get_formula_data)
         self.menuWidget.addTab(self.Basic, "")
 
         # suspension widget
@@ -517,6 +519,9 @@ class Ui_MainWindow(object):
 
         x = msg.exec_()
 
+    def get_formula_data(self):
+        fname = QFileDialog.getOpenFileName()
+        selected_settings[0] = str(fname[0])
 
 if __name__ == "__main__":
     import sys
