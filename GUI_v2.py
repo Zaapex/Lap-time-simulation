@@ -197,6 +197,8 @@ class Ui_MainWindow(object):
         self.suspension_tableWidget.setRowCount(1)
         item = QtWidgets.QTableWidgetItem()
         self.suspension_tableWidget.setVerticalHeaderItem(0, item)
+        coef_friction_index = df.loc[df['Parameter'] == "Coefficient of Friction"].index[0]
+        self.suspension_tableWidget.setItem(0, 0, QTableWidgetItem(str(df["Value"][coef_friction_index])))
         item = QtWidgets.QTableWidgetItem()
         self.suspension_tableWidget.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
@@ -214,6 +216,8 @@ class Ui_MainWindow(object):
         self.load_suspension_Button.setGeometry(QtCore.QRect(720, 320, 191, 81))
         self.load_suspension_Button.setObjectName("load_suspension_Button")
         self.menuWidget.addTab(self.Suspension, "")
+
+        # aerodynamics widget
         self.Aerodynamics = QtWidgets.QWidget()
         self.Aerodynamics.setObjectName("Aerodynamics")
         self.aerodynamics_frame = QtWidgets.QFrame(self.Aerodynamics)
@@ -228,16 +232,28 @@ class Ui_MainWindow(object):
         self.aerodynamics_tableWidget.setRowCount(6)
         item = QtWidgets.QTableWidgetItem()
         self.aerodynamics_tableWidget.setVerticalHeaderItem(0, item)
+        air_index = df.loc[df['Parameter'] == "Air density"].index[0]
+        self.aerodynamics_tableWidget.setItem(0, 0, QTableWidgetItem(str(df["Value"][air_index])))
         item = QtWidgets.QTableWidgetItem()
         self.aerodynamics_tableWidget.setVerticalHeaderItem(1, item)
+        f_area_index = df.loc[df['Parameter'] == "Frontal area"].index[0]
+        self.aerodynamics_tableWidget.setItem(1, 0, QTableWidgetItem(str(df["Value"][f_area_index])))
         item = QtWidgets.QTableWidgetItem()
         self.aerodynamics_tableWidget.setVerticalHeaderItem(2, item)
+        coef_df_index = df.loc[df['Parameter'] == "Coefficient of DF"].index[0]
+        self.aerodynamics_tableWidget.setItem(2, 0, QTableWidgetItem(str(df["Value"][coef_df_index])))
         item = QtWidgets.QTableWidgetItem()
         self.aerodynamics_tableWidget.setVerticalHeaderItem(3, item)
+        coef_drag_index = df.loc[df['Parameter'] == "Coefficient of Drag"].index[0]
+        self.aerodynamics_tableWidget.setItem(3, 0, QTableWidgetItem(str(df["Value"][coef_drag_index])))
         item = QtWidgets.QTableWidgetItem()
         self.aerodynamics_tableWidget.setVerticalHeaderItem(4, item)
+        cop_y_index = df.loc[df['Parameter'] == "CoP in y"].index[0]
+        self.aerodynamics_tableWidget.setItem(4, 0, QTableWidgetItem(str(df["Value"][cop_y_index])))
         item = QtWidgets.QTableWidgetItem()
         self.aerodynamics_tableWidget.setVerticalHeaderItem(5, item)
+        cop_z_index = df.loc[df['Parameter'] == "CoP in z"].index[0]
+        self.aerodynamics_tableWidget.setItem(5, 0, QTableWidgetItem(str(df["Value"][cop_z_index])))
         item = QtWidgets.QTableWidgetItem()
         self.aerodynamics_tableWidget.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
@@ -255,6 +271,8 @@ class Ui_MainWindow(object):
         self.load_aerodynamics_Button.setGeometry(QtCore.QRect(720, 320, 191, 81))
         self.load_aerodynamics_Button.setObjectName("load_aerodynamics_Button")
         self.menuWidget.addTab(self.Aerodynamics, "")
+
+        # Drivetrain widget
         self.Drivetrain = QtWidgets.QWidget()
         self.Drivetrain.setObjectName("Drivetrain")
         self.drivetrain_frame = QtWidgets.QFrame(self.Drivetrain)
@@ -269,14 +287,24 @@ class Ui_MainWindow(object):
         self.drivetrain_tableWidget.setRowCount(5)
         item = QtWidgets.QTableWidgetItem()
         self.drivetrain_tableWidget.setVerticalHeaderItem(0, item)
+        tire_radius_index = df.loc[df['Parameter'] == "Tire radius"].index[0]
+        self.drivetrain_tableWidget.setItem(0, 0, QTableWidgetItem(str(df["Value"][tire_radius_index])))
         item = QtWidgets.QTableWidgetItem()
         self.drivetrain_tableWidget.setVerticalHeaderItem(1, item)
+        max_power_index = df.loc[df['Parameter'] == "Max Power"].index[0]
+        self.drivetrain_tableWidget.setItem(1, 0, QTableWidgetItem(str(df["Value"][max_power_index])))
         item = QtWidgets.QTableWidgetItem()
         self.drivetrain_tableWidget.setVerticalHeaderItem(2, item)
+        max_rpm_index = df.loc[df['Parameter'] == "Max RPM"].index[0]
+        self.drivetrain_tableWidget.setItem(2, 0, QTableWidgetItem(str(df["Value"][max_rpm_index])))
         item = QtWidgets.QTableWidgetItem()
         self.drivetrain_tableWidget.setVerticalHeaderItem(3, item)
+        gear_ratio_index = df.loc[df['Parameter'] == "Gear ratio"].index[0]
+        self.drivetrain_tableWidget.setItem(3, 0, QTableWidgetItem(str(df["Value"][gear_ratio_index])))
         item = QtWidgets.QTableWidgetItem()
         self.drivetrain_tableWidget.setVerticalHeaderItem(4, item)
+        max_torque_index = df.loc[df['Parameter'] == "Max torque"].index[0]
+        self.drivetrain_tableWidget.setItem(4, 0, QTableWidgetItem(str(df["Value"][max_torque_index])))
         item = QtWidgets.QTableWidgetItem()
         self.drivetrain_tableWidget.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
@@ -294,6 +322,8 @@ class Ui_MainWindow(object):
         self.load_drivetrain_Button.setGeometry(QtCore.QRect(720, 320, 191, 81))
         self.load_drivetrain_Button.setObjectName("load_drivetrain_Button")
         self.menuWidget.addTab(self.Drivetrain, "")
+
+        # Electronics widget
         self.Electronics = QtWidgets.QWidget()
         self.Electronics.setObjectName("Electronics")
         self.electronics_frame = QtWidgets.QFrame(self.Electronics)

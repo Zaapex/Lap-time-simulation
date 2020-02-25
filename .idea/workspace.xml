@@ -3,8 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="3cb1a221-99d2-40e2-ae59-b846aa0de236" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code.py" beforeDir="false" afterPath="$PROJECT_DIR$/Code.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/GUI_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI_v2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/tester.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,7 +44,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.GUI_v2">
+  <component name="RunManager" selected="Python.Code">
     <configuration name="Code" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Four wheels" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -156,11 +157,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.GUI_v2" />
+        <item itemvalue="Python.Code" />
         <item itemvalue="Python.tester" />
+        <item itemvalue="Python.GUI_v2" />
         <item itemvalue="Python.GUI" />
         <item itemvalue="Python.uporabnik" />
-        <item itemvalue="Python.Code" />
       </list>
     </recent_temporary>
   </component>
@@ -208,7 +209,7 @@
       <workItem from="1582552616947" duration="41000" />
       <workItem from="1582552703975" duration="7092000" />
       <workItem from="1582616391228" duration="2496000" />
-      <workItem from="1582642713479" duration="3872000" />
+      <workItem from="1582642713479" duration="6490000" />
     </task>
     <servers />
   </component>
@@ -228,11 +229,22 @@
       </map>
     </option>
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Vehicle.py</url>
+          <line>36</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Four_wheels$uporabnik.coverage" NAME="uporabnik Coverage Results" MODIFIED="1582453373397" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Four_wheels$GUI.coverage" NAME="GUI Coverage Results" MODIFIED="1582617008747" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Four_wheels$tester.coverage" NAME="tester Coverage Results" MODIFIED="1582648776191" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Four_wheels$GUI_v2.coverage" NAME="GUI_v2 Coverage Results" MODIFIED="1582648871432" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Four_wheels$Code.coverage" NAME="Code Coverage Results" MODIFIED="1581757586498" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Four_wheels$tester.coverage" NAME="tester Coverage Results" MODIFIED="1582651519421" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Four_wheels$GUI_v2.coverage" NAME="GUI_v2 Coverage Results" MODIFIED="1582649641216" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Four_wheels$Code.coverage" NAME="Code Coverage Results" MODIFIED="1582651613451" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
