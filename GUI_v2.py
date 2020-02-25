@@ -9,7 +9,9 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox, QTableWidgetItem
+import pandas as pd
 
+df = pd.read_csv("Svarog data")
 selected_track = ["None"]
 
 
@@ -140,16 +142,28 @@ class Ui_MainWindow(object):
         self.basic_tableWidget.setRowCount(6)
         item = QtWidgets.QTableWidgetItem()
         self.basic_tableWidget.setVerticalHeaderItem(0, item)
+        mass_index = df.loc[df['Parameter'] == "Mass"].index[0]  # get mass value
+        self.basic_tableWidget.setItem(0, 0, QTableWidgetItem(str(df["Value"][mass_index])))  # write in the table
         item = QtWidgets.QTableWidgetItem()
         self.basic_tableWidget.setVerticalHeaderItem(1, item)
+        cg_y_index = df.loc[df['Parameter'] == "CG in y"].index[0]
+        self.basic_tableWidget.setItem(1, 0, QTableWidgetItem(str(df["Value"][cg_y_index])))
         item = QtWidgets.QTableWidgetItem()
         self.basic_tableWidget.setVerticalHeaderItem(2, item)
+        cg_z_index = df.loc[df['Parameter'] == "CG in z"].index[0]
+        self.basic_tableWidget.setItem(2, 0, QTableWidgetItem(str(df["Value"][cg_z_index])))
         item = QtWidgets.QTableWidgetItem()
         self.basic_tableWidget.setVerticalHeaderItem(3, item)
+        track_width_index = df.loc[df['Parameter'] == "Track width"].index[0]
+        self.basic_tableWidget.setItem(3, 0, QTableWidgetItem(str(df["Value"][track_width_index])))
         item = QtWidgets.QTableWidgetItem()
         self.basic_tableWidget.setVerticalHeaderItem(4, item)
+        wheelbase_index = df.loc[df['Parameter'] == "Wheelbase"].index[0]
+        self.basic_tableWidget.setItem(4, 0, QTableWidgetItem(str(df["Value"][wheelbase_index])))
         item = QtWidgets.QTableWidgetItem()
         self.basic_tableWidget.setVerticalHeaderItem(5, item)
+        w_index = df.loc[df['Parameter'] == "W"].index[0]
+        self.basic_tableWidget.setItem(5, 0, QTableWidgetItem(str(df["Value"][w_index])))
         item = QtWidgets.QTableWidgetItem()
         self.basic_tableWidget.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
@@ -167,6 +181,8 @@ class Ui_MainWindow(object):
         self.load_basic_Button.setGeometry(QtCore.QRect(720, 320, 191, 81))
         self.load_basic_Button.setObjectName("load_basic_Button")
         self.menuWidget.addTab(self.Basic, "")
+
+        # suspension widget
         self.Suspension = QtWidgets.QWidget()
         self.Suspension.setObjectName("Suspension")
         self.suspension_frame = QtWidgets.QFrame(self.Suspension)
