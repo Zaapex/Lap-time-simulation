@@ -10,6 +10,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox, QTableWidgetItem
 
+selected_track = ["None"]
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -163,6 +164,7 @@ class Ui_MainWindow(object):
         self.load_basic_Button.setObjectName("load_basic_Button")
         self.menuWidget.addTab(self.Basic, "")
 
+        # suspension widget
         self.Suspension = QtWidgets.QWidget()
         self.Suspension.setObjectName("Suspension")
         self.Basic_frame_2 = QtWidgets.QFrame(self.Suspension)
@@ -464,11 +466,11 @@ class Ui_MainWindow(object):
     def track_cliked(self, item):
         track = item.text()
         self.track_photo.setPixmap(QtGui.QPixmap("Photos/" + str(track) + ".jpg"))
-        return track
+        selected_track[0] = track
 
     def load_track_clicked(self):
         msg = QMessageBox()
-        msg.setText("You track was loaded")
+        msg.setText("You selected track: " + selected_track[0])
         msg.setWindowTitle("Track loaded")
 
         x = msg.exec_()
