@@ -343,7 +343,7 @@ p, li { white-space: pre-wrap; }
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>10</y>
+        <y>0</y>
         <width>1041</width>
         <height>581</height>
        </rect>
@@ -354,7 +354,7 @@ p, li { white-space: pre-wrap; }
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QTableWidget" name="tableWidget">
+      <widget class="QTableWidget" name="basic_tableWidget">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -365,22 +365,32 @@ p, li { white-space: pre-wrap; }
        </property>
        <row>
         <property name="text">
-         <string notr="true">Center of CG x</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>Center of CG y</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>Center of CG z</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
          <string>Mass</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>CG in y</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>CG in z</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Track widht</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Wheelbase</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>W</string>
         </property>
        </row>
        <column>
@@ -394,7 +404,7 @@ p, li { white-space: pre-wrap; }
         </property>
        </column>
       </widget>
-      <widget class="QTextEdit" name="textEdit">
+      <widget class="QTextEdit" name="basic_textEdit">
        <property name="geometry">
         <rect>
          <x>530</x>
@@ -449,11 +459,11 @@ p, li { white-space: pre-wrap; }
      <attribute name="title">
       <string>Suspension</string>
      </attribute>
-     <widget class="QFrame" name="Basic_frame_2">
+     <widget class="QFrame" name="suspension_frame">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>20</y>
+        <x>0</x>
+        <y>0</y>
         <width>1041</width>
         <height>581</height>
        </rect>
@@ -464,7 +474,7 @@ p, li { white-space: pre-wrap; }
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QTableWidget" name="tableWidget_2">
+      <widget class="QTableWidget" name="suspension_tableWidget">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -475,22 +485,7 @@ p, li { white-space: pre-wrap; }
        </property>
        <row>
         <property name="text">
-         <string notr="true">Center of CG x</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>Center of CG y</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>Center of CG z</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>Mass</string>
+         <string>Coefficient of Friction</string>
         </property>
        </row>
        <column>
@@ -504,7 +499,7 @@ p, li { white-space: pre-wrap; }
         </property>
        </column>
       </widget>
-      <widget class="QTextEdit" name="textEdit_2">
+      <widget class="QTextEdit" name="suspension_textEdit">
        <property name="geometry">
         <rect>
          <x>530</x>
@@ -527,7 +522,7 @@ p, li { white-space: pre-wrap; }
         <string>Explanation</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="save_basic_Button_2">
+      <widget class="QPushButton" name="save_suspension_Button">
        <property name="geometry">
         <rect>
          <x>530</x>
@@ -540,7 +535,7 @@ p, li { white-space: pre-wrap; }
         <string>Save</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="load_basic_Button_2">
+      <widget class="QPushButton" name="load_suspension_Button">
        <property name="geometry">
         <rect>
          <x>720</x>
@@ -559,11 +554,11 @@ p, li { white-space: pre-wrap; }
      <attribute name="title">
       <string>Aerodynamics</string>
      </attribute>
-     <widget class="QFrame" name="Basic_frame_3">
+     <widget class="QFrame" name="aerodynamics_frame">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>20</y>
+        <x>0</x>
+        <y>0</y>
         <width>1041</width>
         <height>581</height>
        </rect>
@@ -574,7 +569,7 @@ p, li { white-space: pre-wrap; }
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QTableWidget" name="tableWidget_3">
+      <widget class="QTableWidget" name="aerodynamics_tableWidget">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -585,22 +580,32 @@ p, li { white-space: pre-wrap; }
        </property>
        <row>
         <property name="text">
-         <string notr="true">Center of CG x</string>
+         <string>Air density</string>
         </property>
        </row>
        <row>
         <property name="text">
-         <string>Center of CG y</string>
+         <string>Frontal area</string>
         </property>
        </row>
        <row>
         <property name="text">
-         <string>Center of CG z</string>
+         <string>Coefficient of DF</string>
         </property>
        </row>
        <row>
         <property name="text">
-         <string>Mass</string>
+         <string>Coefficient of Drag</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>CoP in y</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>CoP in z</string>
         </property>
        </row>
        <column>
@@ -614,7 +619,7 @@ p, li { white-space: pre-wrap; }
         </property>
        </column>
       </widget>
-      <widget class="QTextEdit" name="textEdit_3">
+      <widget class="QTextEdit" name="aerodynamics_textEdit">
        <property name="geometry">
         <rect>
          <x>530</x>
@@ -624,7 +629,7 @@ p, li { white-space: pre-wrap; }
         </rect>
        </property>
       </widget>
-      <widget class="QLabel" name="explanation_basic_3">
+      <widget class="QLabel" name="explanation_aerodnyamics">
        <property name="geometry">
         <rect>
          <x>530</x>
@@ -637,7 +642,7 @@ p, li { white-space: pre-wrap; }
         <string>Explanation</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="save_basic_Button_3">
+      <widget class="QPushButton" name="save_aerodynamics_Button">
        <property name="geometry">
         <rect>
          <x>530</x>
@@ -650,7 +655,7 @@ p, li { white-space: pre-wrap; }
         <string>Save</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="load_basic_Button_3">
+      <widget class="QPushButton" name="load_aerodynamics_Button">
        <property name="geometry">
         <rect>
          <x>720</x>
@@ -669,11 +674,11 @@ p, li { white-space: pre-wrap; }
      <attribute name="title">
       <string>Drivetrain</string>
      </attribute>
-     <widget class="QFrame" name="Basic_frame_4">
+     <widget class="QFrame" name="drivetrain_frame">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>20</y>
+        <x>0</x>
+        <y>0</y>
         <width>1041</width>
         <height>581</height>
        </rect>
@@ -684,7 +689,7 @@ p, li { white-space: pre-wrap; }
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QTableWidget" name="tableWidget_4">
+      <widget class="QTableWidget" name="drivetrain_tableWidget">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -695,22 +700,27 @@ p, li { white-space: pre-wrap; }
        </property>
        <row>
         <property name="text">
-         <string notr="true">Center of CG x</string>
+         <string>Tire radius</string>
         </property>
        </row>
        <row>
         <property name="text">
-         <string>Center of CG y</string>
+         <string>Max Power</string>
         </property>
        </row>
        <row>
         <property name="text">
-         <string>Center of CG z</string>
+         <string>Max RPM</string>
         </property>
        </row>
        <row>
         <property name="text">
-         <string>Mass</string>
+         <string>Gear ratio</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Max torque</string>
         </property>
        </row>
        <column>
@@ -724,7 +734,7 @@ p, li { white-space: pre-wrap; }
         </property>
        </column>
       </widget>
-      <widget class="QTextEdit" name="textEdit_4">
+      <widget class="QTextEdit" name="drivetrain_textEdit">
        <property name="geometry">
         <rect>
          <x>530</x>
@@ -734,7 +744,7 @@ p, li { white-space: pre-wrap; }
         </rect>
        </property>
       </widget>
-      <widget class="QLabel" name="explanation_basic_4">
+      <widget class="QLabel" name="explanation_drivetrain">
        <property name="geometry">
         <rect>
          <x>530</x>
@@ -747,7 +757,7 @@ p, li { white-space: pre-wrap; }
         <string>Explanation</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="save_basic_Button_4">
+      <widget class="QPushButton" name="save_drivetrain_Button">
        <property name="geometry">
         <rect>
          <x>530</x>
@@ -760,7 +770,7 @@ p, li { white-space: pre-wrap; }
         <string>Save</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="load_basic_Button_4">
+      <widget class="QPushButton" name="load_drivetrain_Button">
        <property name="geometry">
         <rect>
          <x>720</x>
@@ -779,11 +789,11 @@ p, li { white-space: pre-wrap; }
      <attribute name="title">
       <string>Electronics</string>
      </attribute>
-     <widget class="QFrame" name="Basic_frame_5">
+     <widget class="QFrame" name="electronics_frame">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>30</y>
+        <x>0</x>
+        <y>0</y>
         <width>1041</width>
         <height>581</height>
        </rect>
@@ -794,7 +804,7 @@ p, li { white-space: pre-wrap; }
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QTableWidget" name="tableWidget_5">
+      <widget class="QTableWidget" name="electronics_tableWidget">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -803,26 +813,6 @@ p, li { white-space: pre-wrap; }
          <height>551</height>
         </rect>
        </property>
-       <row>
-        <property name="text">
-         <string notr="true">Center of CG x</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>Center of CG y</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>Center of CG z</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>Mass</string>
-        </property>
-       </row>
        <column>
         <property name="text">
          <string>Value</string>
@@ -834,7 +824,7 @@ p, li { white-space: pre-wrap; }
         </property>
        </column>
       </widget>
-      <widget class="QTextEdit" name="textEdit_5">
+      <widget class="QTextEdit" name="electronics_textEdit">
        <property name="geometry">
         <rect>
          <x>530</x>
@@ -844,7 +834,7 @@ p, li { white-space: pre-wrap; }
         </rect>
        </property>
       </widget>
-      <widget class="QLabel" name="explanation_basic_5">
+      <widget class="QLabel" name="explanation_electronics">
        <property name="geometry">
         <rect>
          <x>530</x>
@@ -857,7 +847,7 @@ p, li { white-space: pre-wrap; }
         <string>Explanation</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="save_basic_Button_5">
+      <widget class="QPushButton" name="save_electronics_Button">
        <property name="geometry">
         <rect>
          <x>530</x>
@@ -870,7 +860,7 @@ p, li { white-space: pre-wrap; }
         <string>Save</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="load_basic_Button_5">
+      <widget class="QPushButton" name="load_electronics_Button">
        <property name="geometry">
         <rect>
          <x>720</x>
