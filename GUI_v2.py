@@ -9,6 +9,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox, QTableWidgetItem, QFileDialog
+from PyQt5.QtCore import QDate, QTime, QDateTime, Qt
 import pandas as pd
 
 
@@ -217,6 +218,7 @@ class Ui_MainWindow(object):
         self.load_suspension_Button = QtWidgets.QPushButton(self.suspension_frame)
         self.load_suspension_Button.setGeometry(QtCore.QRect(720, 320, 191, 81))
         self.load_suspension_Button.setObjectName("load_suspension_Button")
+        self.load_suspension_Button.clicked.connect(self.get_formula_data)
         self.menuWidget.addTab(self.Suspension, "")
 
         # aerodynamics widget
@@ -272,6 +274,7 @@ class Ui_MainWindow(object):
         self.load_aerodynamics_Button = QtWidgets.QPushButton(self.aerodynamics_frame)
         self.load_aerodynamics_Button.setGeometry(QtCore.QRect(720, 320, 191, 81))
         self.load_aerodynamics_Button.setObjectName("load_aerodynamics_Button")
+        self.load_aerodynamics_Button.clicked.connect(self.get_formula_data)
         self.menuWidget.addTab(self.Aerodynamics, "")
 
         # Drivetrain widget
@@ -323,6 +326,7 @@ class Ui_MainWindow(object):
         self.load_drivetrain_Button = QtWidgets.QPushButton(self.drivetrain_frame)
         self.load_drivetrain_Button.setGeometry(QtCore.QRect(720, 320, 191, 81))
         self.load_drivetrain_Button.setObjectName("load_drivetrain_Button")
+        self.load_drivetrain_Button.clicked.connect(self.get_formula_data)
         self.menuWidget.addTab(self.Drivetrain, "")
 
         # Electronics widget
@@ -354,7 +358,10 @@ class Ui_MainWindow(object):
         self.load_electronics_Button = QtWidgets.QPushButton(self.electronics_frame)
         self.load_electronics_Button.setGeometry(QtCore.QRect(720, 320, 191, 81))
         self.load_electronics_Button.setObjectName("load_electronics_Button")
+        self.load_electronics_Button.clicked.connect(self.get_formula_data)
         self.menuWidget.addTab(self.Electronics, "")
+
+        # view widget
         self.View = QtWidgets.QWidget()
         self.View.setObjectName("View")
         self.menuWidget.addTab(self.View, "")
@@ -507,6 +514,14 @@ class Ui_MainWindow(object):
         print(self.name_of_sim_Edit.text())
         print(self.write_box.text())
 
+        author = self.name_lineEdit.text()
+        name_of_sim = self.name_of_sim_Edit.text()
+        now = QDate.currentDate()
+        time = QTime.currentTime()
+
+
+
+
     def track_cliked(self, item):
         track = item.text()
         self.track_photo.setPixmap(QtGui.QPixmap("Photos/" + str(track) + ".jpg"))
@@ -522,6 +537,49 @@ class Ui_MainWindow(object):
     def get_formula_data(self):
         fname = QFileDialog.getOpenFileName()
         selected_settings[0] = str(fname[0])
+        # data changes when you click choose file
+
+        df = pd.read_csv(selected_settings[0])
+        mass_index = df.loc[df['Parameter'] == "Mass"].index[0]  # get mass value
+        self.basic_tableWidget.setItem(0, 0, QTableWidgetItem(str(df["Value"][mass_index])))  # write in the table
+        cg_y_index = df.loc[df['Parameter'] == "CG in y"].index[0]
+        self.basic_tableWidget.setItem(1, 0, QTableWidgetItem(str(df["Value"][cg_y_index])))
+        cg_z_index = df.loc[df['Parameter'] == "CG in z"].index[0]
+        self.basic_tableWidget.setItem(2, 0, QTableWidgetItem(str(df["Value"][cg_z_index])))
+        track_width_index = df.loc[df['Parameter'] == "Track width"].index[0]
+        self.basic_tableWidget.setItem(3, 0, QTableWidgetItem(str(df["Value"][track_width_index])))
+        wheelbase_index = df.loc[df['Parameter'] == "Wheelbase"].index[0]
+        self.basic_tableWidget.setItem(4, 0, QTableWidgetItem(str(df["Value"][wheelbase_index])))
+        w_index = df.loc[df['Parameter'] == "W"].index[0]
+        self.basic_tableWidget.setItem(5, 0, QTableWidgetItem(str(df["Value"][w_index])))
+
+        coef_friction_index = df.loc[df['Parameter'] == "Coefficient of Friction"].index[0]
+        self.suspension_tableWidget.setItem(0, 0, QTableWidgetItem(str(df["Value"][coef_friction_index])))
+
+        air_index = df.loc[df['Parameter'] == "Air density"].index[0]
+        self.aerodynamics_tableWidget.setItem(0, 0, QTableWidgetItem(str(df["Value"][air_index])))
+        f_area_index = df.loc[df['Parameter'] == "Frontal area"].index[0]
+        self.aerodynamics_tableWidget.setItem(1, 0, QTableWidgetItem(str(df["Value"][f_area_index])))
+        coef_df_index = df.loc[df['Parameter'] == "Coefficient of DF"].index[0]
+        self.aerodynamics_tableWidget.setItem(2, 0, QTableWidgetItem(str(df["Value"][coef_df_index])))
+        coef_drag_index = df.loc[df['Parameter'] == "Coefficient of Drag"].index[0]
+        self.aerodynamics_tableWidget.setItem(3, 0, QTableWidgetItem(str(df["Value"][coef_drag_index])))
+        cop_y_index = df.loc[df['Parameter'] == "CoP in y"].index[0]
+        self.aerodynamics_tableWidget.setItem(4, 0, QTableWidgetItem(str(df["Value"][cop_y_index])))
+        cop_z_index = df.loc[df['Parameter'] == "CoP in z"].index[0]
+        self.aerodynamics_tableWidget.setItem(5, 0, QTableWidgetItem(str(df["Value"][cop_z_index])))
+
+        tire_radius_index = df.loc[df['Parameter'] == "Tire radius"].index[0]
+        self.drivetrain_tableWidget.setItem(0, 0, QTableWidgetItem(str(df["Value"][tire_radius_index])))
+        max_power_index = df.loc[df['Parameter'] == "Max Power"].index[0]
+        self.drivetrain_tableWidget.setItem(1, 0, QTableWidgetItem(str(df["Value"][max_power_index])))
+        max_rpm_index = df.loc[df['Parameter'] == "Max RPM"].index[0]
+        self.drivetrain_tableWidget.setItem(2, 0, QTableWidgetItem(str(df["Value"][max_rpm_index])))
+        gear_ratio_index = df.loc[df['Parameter'] == "Gear ratio"].index[0]
+        self.drivetrain_tableWidget.setItem(3, 0, QTableWidgetItem(str(df["Value"][gear_ratio_index])))
+        max_torque_index = df.loc[df['Parameter'] == "Max torque"].index[0]
+        self.drivetrain_tableWidget.setItem(4, 0, QTableWidgetItem(str(df["Value"][max_torque_index])))
+
 
 if __name__ == "__main__":
     import sys

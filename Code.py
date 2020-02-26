@@ -8,7 +8,7 @@ pd.set_option('display.width', 1000)
 
 name_of_track = "Tracks/Acc.csv"
 df = pd.read_csv(name_of_track, index_col=0, low_memory=False)
-df_data = pd.read_csv("Svarog data", index_col=0)
+df_data = pd.read_csv("Test data.csv", index_col=0)
 
 initial_conditions = {"vx_initial": 0, "t_initial": 0, "a_initial": 7.4, "sigma_initial": 0, "vy_initial": 0,
                       "ang_vel_initial": 0}
@@ -51,7 +51,6 @@ max_rpm = float(df_data["Value"][df_data.loc[df_data['Parameter'] == "Max RPM"].
 tire_radius = float(df_data["Value"][df_data.loc[df_data['Parameter'] == "Tire radius"].index[0]])
 gear_ratio = float(df_data["Value"][df_data.loc[df_data['Parameter'] == "Gear ratio"].index[0]])
 v_max_teo = max_rpm*math.pi*2*tire_radius/(60*gear_ratio)
-
 
 
 for x in range(len(df.index)):
