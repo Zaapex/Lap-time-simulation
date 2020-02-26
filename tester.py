@@ -1,14 +1,8 @@
-from PyQt5.QtCore import QDate, QTime, QDateTime, Qt
+import pandas as pd
 
-now = QDate.currentDate()
+df = pd.read_csv("Svarog data")
 
-print(now.toString(Qt.ISODate))
-
-time = QTime.currentTime()
-
-print(time.toString(Qt.DefaultLocaleShortDate))
-name = "Alex"
-surname = "Zaplatil"
-name_of_sim = "Horiton2"
-f = open(name_of_sim + now.toString(Qt.ISODate) + "-" + time.toString(Qt.DefaultLocaleShortDate)[:2] +
-                 "-" + time.toString(Qt.DefaultLocaleShortDate)[-2:] + ".txt", "w+")
+def simple_cal(track, formula_data):
+    print(track)
+    print(formula_data)
+    return len(track), len(formula_data)

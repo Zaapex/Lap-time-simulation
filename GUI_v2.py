@@ -9,13 +9,18 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox, QTableWidgetItem, QFileDialog
-from PyQt5.QtCore import QDate, QTime, QDateTime, Qt
+from PyQt5.QtCore import QDate, QTime, Qt
 import pandas as pd
-
+from tester import *
+from Code import *
 
 selected_track = ["None"]
 selected_settings = ["Svarog data"]
 df = pd.read_csv(selected_settings[0])
+
+# time
+now = QDate.currentDate()
+time = QTime.currentTime()
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -61,7 +66,8 @@ class Ui_MainWindow(object):
         self.note = QtWidgets.QLabel(self.infoBox)
         self.note.setGeometry(QtCore.QRect(10, 160, 55, 16))
         self.note.setObjectName("note")
-        self.dateTimeEdit = QtWidgets.QDateTimeEdit(self.infoBox)
+        #self.dateTimeEdit = QtWidgets.QDateTimeEdit(self.infoBox)
+        self.dateTimeEdit = QtWidgets.QLabel(self.infoBox)
         self.dateTimeEdit.setGeometry(QtCore.QRect(140, 70, 194, 22))
         self.dateTimeEdit.setObjectName("dateTimeEdit")
         self.name_lineEdit = QtWidgets.QLineEdit(self.infoBox)
@@ -70,7 +76,7 @@ class Ui_MainWindow(object):
         self.name_of_sim_Edit = QtWidgets.QLineEdit(self.infoBox)
         self.name_of_sim_Edit.setGeometry(QtCore.QRect(200, 120, 161, 22))
         self.name_of_sim_Edit.setObjectName("name_of_sim_Edit")
-        self.write_box = QtWidgets.QTextEdit(self.infoBox)
+        self.write_box = QtWidgets.QLineEdit(self.infoBox)
         self.write_box.setGeometry(QtCore.QRect(10, 180, 361, 151))
         self.write_box.setObjectName("write_box")
         self.simulateButton = QtWidgets.QPushButton(self.Simulation)
@@ -399,15 +405,12 @@ class Ui_MainWindow(object):
         self.infoBox.setTitle(_translate("MainWindow", "INFO"))
         self.author.setText(_translate("MainWindow", "Author"))
         self.date.setText(_translate("MainWindow", "Date"))
+        self.dateTimeEdit.setText(str(now.toString(Qt.ISODate)) + " " + time.toString(Qt.DefaultLocaleShortDate))
         self.name_of_sim.setText(_translate("MainWindow", "Name of Simulation"))
         self.note.setText(_translate("MainWindow", "Notes"))
         self.name_lineEdit.setText(_translate("MainWindow", "Name and Surname"))
         self.name_of_sim_Edit.setText(_translate("MainWindow", "Name"))
-        self.write_box.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:12pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic;\">write changes, notes</span></p></body></html>"))
+        self.write_box.setText(_translate("MainWindow", "Write notes"))
         self.simulateButton.setText(_translate("MainWindow", "Simulate"))
         self.data_download_Box.setItemText(0, _translate("MainWindow", "CSV- basic"))
         self.data_download_Box.setItemText(1, _translate("MainWindow", "CSV- advanced"))
@@ -509,18 +512,30 @@ class Ui_MainWindow(object):
         self.actionExit.setText(_translate("MainWindow", "Exit"))
 
     def clickedinfo(self):
-        print(self.name_lineEdit.text())
-        print(self.dateTimeEdit.text())
-        print(self.name_of_sim_Edit.text())
-        print(self.write_box.text())
-
         author = self.name_lineEdit.text()
         name_of_sim = self.name_of_sim_Edit.text()
-        now = QDate.currentDate()
-        time = QTime.currentTime()
+        notes = self.note.text()
 
+        f = open(name_of_sim + now.toString(Qt.ISODate) + "-" + time.toString(Qt.DefaultLocaleShortDate)[:2] +
+                 "-" + time.toString(Qt.DefaultLocaleShortDate)[-2:] + ".txt", "w+")
 
+        f.write("Author: " + str(author) + "\n")
+        f.write("Date: " + str(now.toString(Qt.ISODate)) + "\n")
+        f.write("Name of Simulation: " + str(name_of_sim) + "\n")
+        f.write("Notes: " + str(notes) + "\n")
 
+        lap_time = lap_time_simulation(selected_track[0], selected_settings[0])
+
+        for line in range(len(df.index)):
+            f.write(df["Parameter"][line] + ": " + df["Value"][line] + "\n")
+
+        f.write("Total time: " + str(lap_time) + "\n")
+
+        msg = QMessageBox()
+        msg.setText("Simulation is finished")
+        msg.setWindowTitle("Simulation")
+
+        x = msg.exec_()
 
     def track_cliked(self, item):
         track = item.text()
