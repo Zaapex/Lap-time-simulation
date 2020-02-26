@@ -10,8 +10,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox, QTableWidgetItem, QFileDialog
 from PyQt5.QtCore import QDate, QTime, Qt
-import pandas as pd
-from tester import *
 from Code import *
 
 selected_track = ["None"]
@@ -48,7 +46,7 @@ class Ui_MainWindow(object):
         self.track_photo_sim = QtWidgets.QLabel(self.Simulation)
         self.track_photo_sim.setGeometry(QtCore.QRect(620, 80, 431, 331))
         self.track_photo_sim.setText("")
-        self.track_photo_sim.setPixmap(QtGui.QPixmap("Photos/Capture.PNG"))
+        self.track_photo_sim.setPixmap(QtGui.QPixmap("Photos/Default.jpg"))
         self.track_photo_sim.setScaledContents(True)
         self.track_photo_sim.setObjectName("track_photo_sim")
         self.infoBox = QtWidgets.QGroupBox(self.Simulation)
@@ -106,7 +104,7 @@ class Ui_MainWindow(object):
         self.track_photo = QtWidgets.QLabel(self.Track)
         self.track_photo.setGeometry(QtCore.QRect(500, 130, 391, 331))
         self.track_photo.setText("")
-        self.track_photo.setPixmap(QtGui.QPixmap("Photos/Capture.PNG"))
+        self.track_photo.setPixmap(QtGui.QPixmap("Photos/Default.jpg"))
         self.track_photo.setScaledContents(True)
         self.track_photo.setObjectName("track_photo")
         self.scrollArea = QtWidgets.QScrollArea(self.Track)
@@ -425,7 +423,7 @@ class Ui_MainWindow(object):
         item = self.listWidget.item(1)
         item.setText(_translate("MainWindow", "Skidpad"))
         item = self.listWidget.item(2)
-        item.setText(_translate("MainWindow", "FSG 2012 Autocross"))
+        item.setText(_translate("MainWindow", "FSAE Germany 2012"))
         self.listWidget.setSortingEnabled(__sortingEnabled)
         self.menuWidget.setTabText(self.menuWidget.indexOf(self.Track), _translate("MainWindow", "Track"))
         item = self.basic_tableWidget.verticalHeaderItem(0)
@@ -523,7 +521,7 @@ class Ui_MainWindow(object):
         f.write("Date: " + str(now.toString(Qt.ISODate)) + "\n")
         f.write("Name of Simulation: " + str(name_of_sim) + "\n")
         f.write("Notes: " + str(notes) + "\n")
-
+        print(selected_track[0])
         lap_time = lap_time_simulation(selected_track[0], selected_settings[0])
 
         for line in range(len(df.index)):
