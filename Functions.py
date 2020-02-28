@@ -25,6 +25,7 @@ def max_velocity_rear(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, r, W):
 
     return Y[1]
 
+
 def normal_force_rear_outer(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, r, v, d):
     """Calculation of normal force on rear outer tire"""
 
@@ -48,6 +49,7 @@ def normal_force_rear_inner(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, r
 
     return Normal_Force
 
+
 def normal_force_front_outer(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, r, v, d):
     """Calculation of normal force on front outer tire"""
 
@@ -58,6 +60,7 @@ def normal_force_front_outer(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, 
                                          (2 * h + w) / 2)
 
     return normal_force
+
 
 def normal_force_front_inner(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, r, v, d):
     """Calculation of normal force on front inner tire"""
@@ -139,3 +142,108 @@ def radius_of_corner(name_of_track):
 
     df.to_csv(name_of_track)
 
+
+def max_velocity_front_inner(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, r, mu, K):
+
+    m_rear = m * b / l
+    m_front = m * a / l
+
+    c4 = (CoPy**2*alfa_cl**2*mu**2*r**2 + 2*CoPy*CoPz*alfa_cd*alfa_cl*mu**2*r**2 + 2*CoPy*alfa_cd*alfa_cl*h*mu**2*r**2
+          + 2*CoPy*alfa_cd*alfa_cl*mu**2*r**2*w - 2*CoPy*alfa_cl**2*l*mu**2*r**2 + 4*CoPy*alfa_cl*h*l*m_front*mu**2*r
+          + 2*CoPy*alfa_cl*l*m_front*mu**2*r*w + CoPz**2*alfa_cd**2*mu**2*r**2 + 2*CoPz*alfa_cd**2*h*mu**2*r**2 +
+          2*CoPz*alfa_cd**2*mu**2*r**2*w - 2*CoPz*alfa_cd*alfa_cl*l*mu**2*r**2 + 4*CoPz*alfa_cd*h*l*m_front*mu**2*r +
+          2*CoPz*alfa_cd*l*m_front*mu**2*r*w - 4*K**2*alfa_cd**2*l**2*r**2 + alfa_cd**2*h**2*mu**2*r**2 +
+          2*alfa_cd**2*h*mu**2*r**2*w + alfa_cd**2*mu**2*r**2*w**2 - 2*alfa_cd*alfa_cl*h*l*mu**2*r**2 -
+          2*alfa_cd*alfa_cl*l*mu**2*r**2*w + 4*alfa_cd*h**2*l*m_front*mu**2*r + 6*alfa_cd*h*l*m_front*mu**2*r*w +
+          2*alfa_cd*l*m_front*mu**2*r*w**2 + alfa_cl**2*l**2*mu**2*r**2 - 4*alfa_cl*h*l**2*m_front*mu**2*r -
+          2*alfa_cl*l**2*m_front*mu**2*r*w + 4*h**2*l**2*m_front**2*mu**2 + 4*h*l**2*m_front**2*mu**2*w +
+          l**2*m_front**2*mu**2*w**2 - 4*l**2*m_front**2)/(4*l**2*r**2)
+
+    c2 = (-CoPy*alfa_cl*b*g*m*mu**2*r - CoPz*alfa_cd*b*g*m*mu**2*r - alfa_cd*b*g*h*m*mu**2*r - alfa_cd*b*g*m*mu**2*r*w
+    + alfa_cl*b*g*l*m*mu**2*r - 2*b*g*h*l*m*m_front*mu**2 - b*g*l*m*m_front*mu**2*w)/(2*l**2*r)
+
+    c0 = b**2*g**2*m**2*mu**2/(4*l**2)
+
+    coeff = [c4, 0, c2, 0, c0]
+
+    return coeff
+
+
+def max_velocity_front_outer(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, r, mu, K):
+
+    m_rear = m * b / l
+    m_front = m * a / l
+
+    c4 = (CoPy**2*alfa_cl**2*mu**2*r**2 + 2*CoPy*CoPz*alfa_cd*alfa_cl*mu**2*r**2 + 2*CoPy*alfa_cd*alfa_cl*h*mu**2*r**2
+          + 2*CoPy*alfa_cd*alfa_cl*mu**2*r**2*w - 2*CoPy*alfa_cl**2*l*mu**2*r**2 - 4*CoPy*alfa_cl*h*l*m_front*mu**2*r -
+          2*CoPy*alfa_cl*l*m_front*mu**2*r*w + CoPz**2*alfa_cd**2*mu**2*r**2 + 2*CoPz*alfa_cd**2*h*mu**2*r**2 +
+          2*CoPz*alfa_cd**2*mu**2*r**2*w - 2*CoPz*alfa_cd*alfa_cl*l*mu**2*r**2 - 4*CoPz*alfa_cd*h*l*m_front*mu**2*r -
+          2*CoPz*alfa_cd*l*m_front*mu**2*r*w - 4*K**2*alfa_cd**2*l**2*r**2 + alfa_cd**2*h**2*mu**2*r**2 +
+          2*alfa_cd**2*h*mu**2*r**2*w + alfa_cd**2*mu**2*r**2*w**2 - 2*alfa_cd*alfa_cl*h*l*mu**2*r**2 -
+          2*alfa_cd*alfa_cl*l*mu**2*r**2*w - 4*alfa_cd*h**2*l*m_front*mu**2*r - 6*alfa_cd*h*l*m_front*mu**2*r*w -
+          2*alfa_cd*l*m_front*mu**2*r*w**2 + alfa_cl**2*l**2*mu**2*r**2 + 4*alfa_cl*h*l**2*m_front*mu**2*r +
+          2*alfa_cl*l**2*m_front*mu**2*r*w + 4*h**2*l**2*m_front**2*mu**2 + 4*h*l**2*m_front**2*mu**2*w +
+          l**2*m_front**2*mu**2*w**2 - 4*l**2*m_front**2)/(4*l**2*r**2)
+
+    c2 = (-CoPy*alfa_cl*b*g*m*mu**2*r - CoPz*alfa_cd*b*g*m*mu**2*r - alfa_cd*b*g*h*m*mu**2*r - alfa_cd*b*g*m*mu**2*r*w
+          + alfa_cl*b*g*l*m*mu**2*r + 2*b*g*h*l*m*m_front*mu**2 + b*g*l*m*m_front*mu**2*w)/(2*l**2*r)
+
+    c0 = b**2*g**2*m**2*mu**2/(4*l**2)
+
+    coeff = [c4, 0, c2, 0, c0]
+
+    return coeff
+
+
+def max_velocity_rear_outer(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, r, mu, K, d):
+
+    m_rear = m * b / l
+    m_front = m * a / l
+
+    c4 = (CoPy**2*alfa_cl**2*d**2*mu**2*r**2 - 2*CoPy*CoPz*alfa_cd*alfa_cl*d**2*mu**2*r**2 +
+          2*CoPy*alfa_cd*alfa_cl*d**2*h*mu**2*r**2 - 2*CoPy*alfa_cl**2*d**2*l*mu**2*r**2 -
+          4*CoPy*alfa_cl*d*h*l*m_rear*mu**2*r - 2*CoPy*alfa_cl*d*l*m_rear*mu**2*r*w +
+          CoPz**2*alfa_cd**2*d**2*mu**2*r**2 - 2*CoPz*alfa_cd**2*d**2*h*mu**2*r**2 +
+          2*CoPz*alfa_cd*alfa_cl*d**2*l*mu**2*r**2 + 4*CoPz*alfa_cd*d*h*l*m_rear*mu**2*r +
+          2*CoPz*alfa_cd*d*l*m_rear*mu**2*r*w - 4*K**2*alfa_cd**2*d**2*l**2*r**2 +
+          alfa_cd**2*d**2*h**2*mu**2*r**2 - 2*alfa_cd*alfa_cl*d**2*h*l*mu**2*r**2 -
+          4*alfa_cd*d*h**2*l*m_rear*mu**2*r - 2*alfa_cd*d*h*l*m_rear*mu**2*r*w +
+          alfa_cl**2*d**2*l**2*mu**2*r**2 + 4*alfa_cl*d*h*l**2*m_rear*mu**2*r +
+          2*alfa_cl*d*l**2*m_rear*mu**2*r*w - 4*d**2*l**2*m_rear**2 + 4*h**2*l**2*m_rear**2*mu**2 +
+          4*h*l**2*m_rear**2*mu**2*w + l**2*m_rear**2*mu**2*w**2)/(4*d**2*l**2*r**2)
+
+    c2 = (-CoPy*a*alfa_cl*d*g*m*mu**2*r + CoPz*a*alfa_cd*d*g*m*mu**2*r - a*alfa_cd*d*g*h*m*mu**2*r +
+          a*alfa_cl*d*g*l*m*mu**2*r + 2*a*g*h*l*m*m_rear*mu**2 + a*g*l*m*m_rear*mu**2*w)/(2*d*l**2*r)
+
+    c0 = a**2*g**2*m**2*mu**2/(4*l**2)
+
+    coeff = [c4, 0, c2, 0, c0]
+
+    return coeff
+
+
+def max_velocity_rear_inner(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, r, mu, K, d):
+
+    m_rear = m * b / l
+    m_front = m * a / l
+
+    c4 = (CoPy**2*alfa_cl**2*d**2*mu**2*r**2 - 2*CoPy*CoPz*alfa_cd*alfa_cl*d**2*mu**2*r**2 +
+          2*CoPy*alfa_cd*alfa_cl*d**2*h*mu**2*r**2 - 2*CoPy*alfa_cl**2*d**2*l*mu**2*r**2 -
+          4*CoPy*alfa_cl*d*h*l*m_rear*mu**2*r - 2*CoPy*alfa_cl*d*l*m_rear*mu**2*r*w +
+          CoPz**2*alfa_cd**2*d**2*mu**2*r**2 - 2*CoPz*alfa_cd**2*d**2*h*mu**2*r**2 +
+          2*CoPz*alfa_cd*alfa_cl*d**2*l*mu**2*r**2 + 4*CoPz*alfa_cd*d*h*l*m_rear*mu**2*r +
+          2*CoPz*alfa_cd*d*l*m_rear*mu**2*r*w - 4*K**2*alfa_cd**2*d**2*l**2*r**2 +
+          alfa_cd**2*d**2*h**2*mu**2*r**2 - 2*alfa_cd*alfa_cl*d**2*h*l*mu**2*r**2 -
+          4*alfa_cd*d*h**2*l*m_rear*mu**2*r - 2*alfa_cd*d*h*l*m_rear*mu**2*r*w +
+          alfa_cl**2*d**2*l**2*mu**2*r**2 + 4*alfa_cl*d*h*l**2*m_rear*mu**2*r +
+          2*alfa_cl*d*l**2*m_rear*mu**2*r*w - 4*d**2*l**2*m_rear**2 + 4*h**2*l**2*m_rear**2*mu**2 +
+          4*h*l**2*m_rear**2*mu**2*w + l**2*m_rear**2*mu**2*w**2)/(4*d**2*l**2*r**2)
+
+    c2 = (-CoPy*a*alfa_cl*d*g*m*mu**2*r + CoPz*a*alfa_cd*d*g*m*mu**2*r - a*alfa_cd*d*g*h*m*mu**2*r +
+          a*alfa_cl*d*g*l*m*mu**2*r + 2*a*g*h*l*m*m_rear*mu**2 + a*g*l*m*m_rear*mu**2*w)/(2*d*l**2*r)
+
+    c0 = a**2*g**2*m**2*mu**2/(4*l**2)
+
+    coeff = [c4, 0, c2, 0, c0]
+
+    return coeff

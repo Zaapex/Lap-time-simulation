@@ -63,10 +63,9 @@ def lap_time_simulation(track, formula_data):
 
         max_Velocity_force = v_max_teo
 
-
         df.at[x, "vx_max"] = min(max_Velocity_cal_rear, max_Velocity_force)
 
-        df.fillna(method="ffill", inplace=True)
+    df.fillna(method="ffill", inplace=True)
 
     for x in range(len(df.index)):
 
@@ -160,7 +159,7 @@ def lap_time_simulation(track, formula_data):
         f_fri_f_o = f_nor_f_o * coef_friction
         f_fri_f_i = f_nor_f_i * coef_friction
 
-        F_friction = min(f_fri_r_o, f_fri_r_i)*2 + min(f_fri_f_o, f_fri_f_o)*2
+        F_friction = min(f_fri_r_o, f_fri_r_i)*2 + min(f_fri_f_o, f_fri_f_i)*2
 
 
         if F_friction ** 2 - F_centripental ** 2 < 0:
@@ -191,7 +190,7 @@ def lap_time_simulation(track, formula_data):
     plt.plot(list(range(4500)), df["acceleration"][:4500], "g")"""
 
     plt.legend()
-    #plt.show()
+    plt.show()
 
     df.fillna(method="ffill", inplace=True)
 
