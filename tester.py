@@ -2,7 +2,7 @@ from Code import *
 import matplotlib.pyplot as plt
 from scipy import optimize
 
-#lap_time_simulation(track="Test_short", formula_data="Svarog data")
+lap_time_simulation(track="Test_short", formula_data="Svarog data")
 track = "Test_short"
 formula_data = "Svarog data"
 name_of_track = "Tracks/" + track + ".csv"
@@ -44,8 +44,7 @@ tire_radius = float(df_data["Value"][df_data.loc[df_data['Parameter'] == "Tire r
 gear_ratio = float(df_data["Value"][df_data.loc[df_data['Parameter'] == "Gear ratio"].index[0]])
 v_max_teo = max_rpm*math.pi*2*tire_radius/(60*gear_ratio)
 
-
-"""for radius in range(1, 40, 4):
+"""for radius in range(1, 12):
     max_vel_fi = max_velocity_front_inner(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase, CoPy=CoPy,
                                           alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, mu=coef_friction, K=KF, d=track_width)
 
@@ -62,39 +61,41 @@ v_max_teo = max_rpm*math.pi*2*tire_radius/(60*gear_ratio)
         c4 = max_vel_fi[0]
         c2 = max_vel_fi[2]
         c0 = max_vel_fi[4]
-        return (c4*x ** 4 + c2*x + c0)
+        return (c4*x ** 4 + c2*x**2 + c0)
 
     def vel_fo(x):
         c4 = max_vel_fo[0]
         c2 = max_vel_fo[2]
         c0 = max_vel_fo[4]
-        return (c4*x ** 4 + c2*x + c0)
+        return (c4*x ** 4 + c2*x**2 + c0)
 
     def vel_ri(x):
         c4 = max_vel_ri[0]
         c2 = max_vel_ri[2]
         c0 = max_vel_ri[4]
-        return (c4*x ** 4 + c2*x + c0)
+        return (c4*x ** 4 + c2*x**2 + c0)
 
     def vel_ro(x):
         c4 = max_vel_ro[0]
         c2 = max_vel_ro[2]
         c0 = max_vel_ro[4]
-        return (c4*x ** 4 + c2*x + c0), [c4, c2, c0]
+        return (c4*x ** 4 + c2*x**2 + c0)
 
 
     root_fi = optimize.newton(vel_fi, radius, maxiter=1000)
-    root_fo = optimize.newton(vel_fo, radius, maxiter=1000)
+    #root_fo = optimize.newton(vel_fo, radius, maxiter=1000)
     root_ri = optimize.newton(vel_ri, radius, maxiter=1000)
-    root_ro = optimize.newton(vel_ro, radius, maxiter=10000)
+    #root_ro = optimize.newton(vel_ro, radius, maxiter=10000)
     plt.scatter(radius, root_fi, color="b", label="Front inner")
-    plt.scatter(radius, root_fo, color="y", label="Front outer")
+    #plt.scatter(radius, root_fo, color="y", label="Front outer")
     plt.scatter(radius, root_ri, color="r", label="Rear inner")
     #plt.scatter(radius, root_ro, color="g", label="Rear outer")
-    #print(root_ro, radius)"""
+    #print(root_ro, radius)
 
-radius = 20
-"""max_vel_fi = max_velocity_front_inner(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase, CoPy=CoPy,
+plt.show()"""
+
+"""radius = 10
+max_vel_fi = max_velocity_front_inner(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase, CoPy=CoPy,
                                           alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, mu=coef_friction, K=KF, d=track_width)
 
 max_vel_fo = max_velocity_front_outer(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase, CoPy=CoPy,
@@ -105,7 +106,7 @@ max_vel_ri = max_velocity_rear_inner(a, b, m=mass, g=g, h=height_CG, w=w, alfa_c
 
 max_vel_ro = max_velocity_rear_outer(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase, CoPy=CoPy,
                                          alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, mu=coef_friction, K=KR, d=track_width)
-x = np.linspace(0, 20, num=100)
+x = np.linspace(0, 10, num=100)
 
 f_fi = []
 f_fo = []
@@ -126,7 +127,7 @@ plt.legend()
 plt.show()"""
 
 
-x = np.linspace(0, 25, num=400)
+"""x = np.linspace(0, 25, num=400)
 print(x)
 for radius in range(5, 50, 5):
     force_outer = []
@@ -136,13 +137,26 @@ for radius in range(5, 50, 5):
             wheelbase - CoPy) + alpha_Cd * v ** 2 * ((w / 2) + CoPz)) / (2 * wheelbase)) + m_rear * v ** 2 / (track_width*radius) * (
                           (2 * height_CG + w)/2)))**2 - (0.7*m_rear * v ** 2 / radius) ** 2) ** (1 / 2)
             - KR * alpha_Cd * v ** 2)
-        """Force_rear_inner = (((coef_friction * (((a * mass * g - (height_CG + w / 2) * alpha_Cd * v ** 2 + alpha_Cl * v ** 2 * (
-            wheelbase - CoPy) + alpha_Cd * v ** 2 * ((w / 2) + CoPz)) / (2 * wheelbase)) - m_rear * v ** 2 / (track_width*radius) * (
-                          (2 * height_CG + w)/2)))**2 - (0.475*m_rear * v ** 2 / radius) ** 2) ** (1 / 2)
-            - KR * alpha_Cd * v ** 2)"""
+    
         force_outer.append(Force_rear_outer)
     plt.plot(x, force_outer, label=radius)
 
 
 plt.legend()
-plt.show()
+plt.show()"""
+
+"""for radius in range(1, 100, 5):
+    max_vel_fi = max_velocity_front_inner(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase,
+                                              CoPy=CoPy,
+                                              alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, mu=coef_friction, K=KF,
+                                              d=track_width)
+
+
+    def vel_fi(x):
+        c4 = max_vel_fi[0]
+        c2 = max_vel_fi[2]
+        c0 = max_vel_fi[4]
+        return (c4 * x ** 4 + c2 * x ** 2 + c0)
+
+    root_fi = optimize.newton(vel_fi, 30, maxiter=10000)
+    print(root_fi, radius)"""

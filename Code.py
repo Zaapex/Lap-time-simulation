@@ -1,6 +1,7 @@
 from Functions import *
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy import optimize
 
 pd.set_option('display.max_rows', 100)
 pd.set_option('display.max_columns', 500)
@@ -62,6 +63,38 @@ def lap_time_simulation(track, formula_data):
                                                   CoPy=CoPy, alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, W=W)
 
         max_Velocity_force = v_max_teo
+
+        max_vel_fi = max_velocity_front_inner(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase,
+                                              CoPy=CoPy,
+                                              alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, mu=coef_friction, K=KF,
+                                              d=track_width)
+
+        max_vel_ri = max_velocity_rear_inner(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase,
+                                             CoPy=CoPy,
+                                             alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, mu=coef_friction, K=KR,
+                                             d=track_width)
+
+        def vel_fi(x):
+            c4 = max_vel_fi[0]
+            c2 = max_vel_fi[2]
+            c0 = max_vel_fi[4]
+            return (c4 * x ** 4 + c2 * x ** 2 + c0)
+
+        def vel_ri(x):
+            c4 = max_vel_ri[0]
+            c2 = max_vel_ri[2]
+            c0 = max_vel_ri[4]
+            return (c4 * x ** 4 + c2 * x ** 2 + c0)
+
+        if radius < 70:
+            root_fi = optimize.newton(vel_fi, v_max_teo, maxiter=1000)
+            root_ri = optimize.newton(vel_ri, v_max_teo, maxiter=1000)
+
+            df.at[x, "vel_fi"] = root_fi
+            df.at[x, "vel_ri"] = root_ri
+        else:
+            df.at[x, "vel_fi"] = 0
+            df.at[x, "vel_ri"] = 0
 
         df.at[x, "vx_max"] = min(max_Velocity_cal_rear, max_Velocity_force)
 
@@ -181,13 +214,13 @@ def lap_time_simulation(track, formula_data):
             else:
                 pass
 
-    plt.plot(list(range(len(df.index))), df["vx_max"][:], "g", label="V max")
+    """plt.plot(list(range(len(df.index))), df["vx_max"][:], "g", label="V max")
     plt.plot(list(range(len(df.index))), df["vx_entry"][:], "b", label="V entry")
-    plt.plot(list(range(len(df.index))), df["acceleration"][:], "r.", label="Acceleration")
+    plt.plot(list(range(len(df.index))), df["acceleration"][:], "r.", label="Acceleration")"""
 
-    """plt.plot(list(range(4500)), df["vx_max"][:4500], "r")
-    plt.plot(list(range(4500)), df["vx_entry"][:4500], "b")
-    plt.plot(list(range(4500)), df["acceleration"][:4500], "g")"""
+    plt.plot(list(range(len(df.index))), df["vx_max"][:], "g.", label="V max")
+    plt.plot(list(range(len(df.index))), df["vel_fi"][:], "b.", label="V front inner")
+    plt.plot(list(range(len(df.index))), df["vel_ri"][:], "r.", label="V rear inner")
 
     plt.legend()
     plt.show()
