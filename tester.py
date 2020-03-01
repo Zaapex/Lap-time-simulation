@@ -2,8 +2,8 @@ from Code import *
 import matplotlib.pyplot as plt
 from scipy import optimize
 
-lap_time_simulation(track="Test_short", formula_data="Svarog data")
-track = "Test_short"
+lap_time_simulation(track="FSAE Germany 2012", formula_data="Svarog data")
+track = "Acceleration"
 formula_data = "Svarog data"
 name_of_track = "Tracks/" + track + ".csv"
 df = pd.read_csv(name_of_track, index_col=0, low_memory=False)
@@ -43,4 +43,3 @@ max_rpm = float(df_data["Value"][df_data.loc[df_data['Parameter'] == "Max RPM"].
 tire_radius = float(df_data["Value"][df_data.loc[df_data['Parameter'] == "Tire radius"].index[0]])
 gear_ratio = float(df_data["Value"][df_data.loc[df_data['Parameter'] == "Gear ratio"].index[0]])
 v_max_teo = max_rpm*math.pi*2*tire_radius/(60*gear_ratio)
-

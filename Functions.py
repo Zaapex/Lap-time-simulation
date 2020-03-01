@@ -31,7 +31,7 @@ def normal_force_rear_outer(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, r
 
     m_rear = m * b / l
 
-    Normal_Force = ((a * m * g - (h + w / 2) * m*acc + alfa_cl * v ** 2 * (
+    Normal_Force = ((a * m * g + (h + w / 2) * m*acc + alfa_cl * v ** 2 * (
             l - CoPy) + alfa_cd * v ** 2 * ((w / 2) + CoPz)) / (2 * l)) + m_rear * v ** 2 / (d * r) * (
                                         (2 * h + w) / 2)
 
@@ -43,7 +43,7 @@ def normal_force_rear_inner(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, r
 
     m_rear = m * b / l
 
-    Normal_Force = (((a * m * g - (h + w / 2) * m*acc + alfa_cl * v ** 2 * (
+    Normal_Force = (((a * m * g + (h + w / 2) * m*acc + alfa_cl * v ** 2 * (
             l - CoPy) + alfa_cd * v ** 2 * ((w / 2) + CoPz)) / (2 * l)) - m_rear * v ** 2 / (d*r) * (
                                         (2 * h + w) / 2))
 

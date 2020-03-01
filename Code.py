@@ -176,7 +176,7 @@ def lap_time_simulation(track, formula_data):
         s = df.loc[x, "s"]
 
         F_centripental = (mass * vx_entry ** 2 / radius)
-        F_drag = alpha_drag() * vx_entry ** 2
+        F_drag = alpha_Cd* vx_entry ** 2
 
         # normal force on each tire
         f_nor_r_o = normal_force_rear_outer(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase, CoPy=CoPy,
@@ -213,6 +213,7 @@ def lap_time_simulation(track, formula_data):
                 df.at[x, "vx_entry"] = new_v_entry
                 df.at[x - 1, "vx_exit"] = new_v_entry
                 df.at[x, "acceleration"] = max_deceleration
+
             else:
                 pass
 
