@@ -86,17 +86,19 @@ def lap_time_simulation(track, formula_data):
             c0 = max_vel_ri[4]
             return (c4 * x ** 4 + c2 * x ** 2 + c0)
 
-        if radius < 70:
-            root_fi = optimize.newton(vel_fi, v_max_teo, maxiter=1000)
-            root_ri = optimize.newton(vel_ri, v_max_teo, maxiter=1000)
+        if radius < 74:
+            root_fi = optimize.newton(vel_fi, v_max_teo, maxiter=10000)
+            root_ri = optimize.newton(vel_ri, v_max_teo, maxiter=10000)
 
             df.at[x, "vel_fi"] = root_fi
             df.at[x, "vel_ri"] = root_ri
+            df.at[x, "vx_max"] = (root_fi + root_ri)/2
         else:
-            df.at[x, "vel_fi"] = 0
-            df.at[x, "vel_ri"] = 0
+            df.at[x, "vel_fi"] = v_max_teo
+            df.at[x, "vel_ri"] = v_max_teo
+            df.at[x, "vx_max"] = v_max_teo
 
-        df.at[x, "vx_max"] = min(max_Velocity_cal_rear, max_Velocity_force)
+        #df.at[x, "vx_max"] = min(max_Velocity_cal_rear, max_Velocity_force)
 
     df.fillna(method="ffill", inplace=True)
 
@@ -110,13 +112,13 @@ def lap_time_simulation(track, formula_data):
 
         # normal force on each tire
         f_nor_r_o = normal_force_rear_outer(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase, CoPy=CoPy,
-                                             alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=track_width, v=vx_entry)
+                                             alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=track_width, v=vx_entry, acc=acc_x)
         f_nor_r_i = normal_force_rear_inner(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase, CoPy=CoPy,
-                                             alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=track_width, v=vx_entry)
+                                             alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=track_width, v=vx_entry, acc=acc_x)
         f_nor_f_o = normal_force_front_outer(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase, CoPy=CoPy,
-                                             alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=track_width, v=vx_entry)
+                                             alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=track_width, v=vx_entry, acc=acc_x)
         f_nor_f_i = normal_force_front_inner(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase, CoPy=CoPy,
-                                             alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=track_width, v=vx_entry)
+                                             alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=track_width, v=vx_entry, acc=acc_x)
 
         # friction force for each tire
         f_fri_r_o = f_nor_r_o * coef_friction
@@ -178,13 +180,13 @@ def lap_time_simulation(track, formula_data):
 
         # normal force on each tire
         f_nor_r_o = normal_force_rear_outer(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase, CoPy=CoPy,
-                                            alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=track_width, v=vx_entry)
+                                            alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=track_width, v=vx_entry, acc=acc_x)
         f_nor_r_i = normal_force_rear_inner(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase, CoPy=CoPy,
-                                            alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=track_width, v=vx_entry)
+                                            alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=track_width, v=vx_entry, acc=acc_x)
         f_nor_f_o = normal_force_front_outer(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase, CoPy=CoPy,
-                                             alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=track_width, v=vx_entry)
+                                             alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=track_width, v=vx_entry, acc=acc_x)
         f_nor_f_i = normal_force_front_inner(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase, CoPy=CoPy,
-                                             alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=track_width, v=vx_entry)
+                                             alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=track_width, v=vx_entry, acc=acc_x)
 
         # friction force for each tire
         f_fri_r_o = f_nor_r_o * coef_friction
@@ -214,13 +216,18 @@ def lap_time_simulation(track, formula_data):
             else:
                 pass
 
-    """plt.plot(list(range(len(df.index))), df["vx_max"][:], "g", label="V max")
+    plt.plot(list(range(len(df.index))), df["vx_max"][:], "g", label="V max")
     plt.plot(list(range(len(df.index))), df["vx_entry"][:], "b", label="V entry")
-    plt.plot(list(range(len(df.index))), df["acceleration"][:], "r.", label="Acceleration")"""
+    plt.plot(list(range(len(df.index))), df["acceleration"][:], "r.", label="Acceleration")
 
-    plt.plot(list(range(len(df.index))), df["vx_max"][:], "g.", label="V max")
+    """plt.plot(list(range(len(df.index))), df["vx_max"][:], "g.", label="V max")
     plt.plot(list(range(len(df.index))), df["vel_fi"][:], "b.", label="V front inner")
-    plt.plot(list(range(len(df.index))), df["vel_ri"][:], "r.", label="V rear inner")
+    plt.plot(list(range(len(df.index))), df["vel_ri"][:], "r.", label="V rear inner")"""
+
+    """plt.plot(df["R"][:], df["vx_max"][:], "g.", label="V max")
+    plt.plot(df["R"][:], df["vel_fi"][:], "b.", label="V front inner")
+    plt.plot(df["R"][:], df["vel_ri"][:], "r.", label="V rear inner")"""
+
 
     plt.legend()
     plt.show()

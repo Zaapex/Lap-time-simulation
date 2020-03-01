@@ -26,48 +26,48 @@ def max_velocity_rear(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, r, W):
     return Y[1]
 
 
-def normal_force_rear_outer(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, r, v, d):
+def normal_force_rear_outer(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, r, v, d,acc):
     """Calculation of normal force on rear outer tire"""
 
     m_rear = m * b / l
 
-    Normal_Force = ((a * m * g - (h + w / 2) * alfa_cd * v ** 2 + alfa_cl * v ** 2 * (
+    Normal_Force = ((a * m * g - (h + w / 2) * m*acc + alfa_cl * v ** 2 * (
             l - CoPy) + alfa_cd * v ** 2 * ((w / 2) + CoPz)) / (2 * l)) + m_rear * v ** 2 / (d * r) * (
                                         (2 * h + w) / 2)
 
     return Normal_Force
 
 
-def normal_force_rear_inner(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, r, v, d):
+def normal_force_rear_inner(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, r, v, d, acc):
     """Calculation of normal force on rear inner tire"""
 
     m_rear = m * b / l
 
-    Normal_Force = (((a * m * g - (h + w / 2) * alfa_cd * v ** 2 + alfa_cl * v ** 2 * (
+    Normal_Force = (((a * m * g - (h + w / 2) * m*acc + alfa_cl * v ** 2 * (
             l - CoPy) + alfa_cd * v ** 2 * ((w / 2) + CoPz)) / (2 * l)) - m_rear * v ** 2 / (d*r) * (
                                         (2 * h + w) / 2))
 
     return Normal_Force
 
 
-def normal_force_front_outer(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, r, v, d):
+def normal_force_front_outer(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, r, v, d, acc):
     """Calculation of normal force on front outer tire"""
 
     m_front = m * a / l
 
-    normal_force = ((b * m * g - (h + w / 2) * alfa_cd * v ** 2 + alfa_cl * v ** 2 * (
+    normal_force = ((b * m * g - (h + w / 2) * m*acc + alfa_cl * v ** 2 * (
             l - CoPy) - alfa_cd * v ** 2 * ((w / 2) + CoPz)) / (2 * l)) + m_front * v ** 2 / (d*r) * (
                                          (2 * h + w) / 2)
 
     return normal_force
 
 
-def normal_force_front_inner(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, r, v, d):
+def normal_force_front_inner(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, r, v, d, acc):
     """Calculation of normal force on front inner tire"""
 
     m_front = m * a / l
 
-    normal_force = ((b * m * g - (h + w / 2) * alfa_cd * v ** 2 + alfa_cl * v ** 2 * (
+    normal_force = ((b * m * g - (h + w / 2) * m*acc + alfa_cl * v ** 2 * (
             l - CoPy) - alfa_cd * v ** 2 * ((w / 2) + CoPz)) / (2 * l)) - m_front * v ** 2 / (d * r) * (
                            (2 * h + w) / 2)
 
