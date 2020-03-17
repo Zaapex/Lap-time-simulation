@@ -44,7 +44,13 @@ tire_radius = float(df_data["Value"][df_data.loc[df_data['Parameter'] == "Tire r
 gear_ratio = float(df_data["Value"][df_data.loc[df_data['Parameter'] == "Gear ratio"].index[0]])
 v_max_teo = max_rpm*math.pi*2*tire_radius/(60*gear_ratio)
 
-for radius in range(5, 100, 5):
+max_fi = list()
+max_fo = list()
+max_ri = list()
+max_ro = list()
+radij = list()
+
+for radius in range(5, 100, 10):
     max_vel_fi = max_velocity_front_inner(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase,
                                               CoPy=CoPy,
                                               alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, mu=coef_friction, K=KF,
@@ -54,6 +60,11 @@ for radius in range(5, 100, 5):
                                              CoPy=CoPy,
                                              alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, mu=coef_friction, K=KR,
                                              d=track_width)
+
+    max_vel_ro = max_velocity_rear_outer(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase,
+                                         CoPy=CoPy,
+                                         alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, mu=coef_friction, K=KR,
+                                         d=track_width)
 
     def vel_fi(x):
         c4 = max_vel_fi[0]
@@ -67,8 +78,33 @@ for radius in range(5, 100, 5):
         c0 = max_vel_ri[4]
         return (c4 * x ** 4 + c2 * x ** 2 + c0)
 
+    def vel_ro():
+        c4 = max_vel_ro[0]
+        c2 = max_vel_ro[2]
+        c0 = max_vel_ro[4]
+        speed = list()
+        value = list()
+        for x in range(100, 10000, 500):
+            k = c4 * x ** 4 + c2 * x ** 2 + c0
+            speed.append(x)
+            value.append(k)
+        plt.plot(speed, value, label=radius)
 
-    root_fi = optimize.newton(vel_fi, v_max_teo, maxiter=10000)
+    vel_ro()
+        #return (c4 * x ** 4 + c2 * x ** 2 + c0)
+
+    """root_fi = optimize.newton(vel_fi, v_max_teo, maxiter=10000)
     root_ri = optimize.newton(vel_ri, v_max_teo, maxiter=10000)
-
-    print(root_fi, root_ri)
+    root_ro = optimize.newton(vel_ro, v_max_teo, maxiter=1000000)
+    print(radius, root_ro)
+    radij.append(radius)
+    max_fi.append(root_fi)
+    max_ri.append(root_ri)
+    max_ro.append(root_ro)"""
+plt.legend()
+plt.show()
+"""plt.plot(radij, max_fi, "g.", label="front inner")
+plt.plot(radij, max_ri, "b.", label="rear inner")
+plt.plot(radij, max_ro, "r.", label="rear outer")
+plt.legend()
+plt.show()"""
