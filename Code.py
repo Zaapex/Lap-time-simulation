@@ -81,9 +81,9 @@ def lap_time_simulation(track, formula_data):
             c0 = max_vel_ri[4]
             return (c4 * x ** 4 + c2 * x ** 2 + c0)
 
-        if radius < 74:
-            root_fi = optimize.newton(vel_fi, v_max_teo, maxiter=10000)
-            root_ri = optimize.newton(vel_ri, v_max_teo, maxiter=10000)
+        if radius < 150:
+            root_fi = optimize.newton(vel_fi, v_max_teo, maxiter=100000)
+            root_ri = optimize.newton(vel_ri, v_max_teo, maxiter=100000)
 
             df.at[x, "vel_fi"] = root_fi
             df.at[x, "vel_ri"] = root_ri
@@ -133,8 +133,6 @@ def lap_time_simulation(track, formula_data):
             F_acc_f_o = np.sqrt(f_fri_f_o ** 2 - (F_centripental * f_nor_f_o / F_nor_total) ** 2)
             F_acc_f_i = np.sqrt(f_fri_f_i ** 2 - (F_centripental * f_nor_f_i / F_nor_total) ** 2)
 
-
-        #print(F_acc_r_o, F_acc_r_i, F_acc_f_o, F_acc_f_i)
 
         if vx_entry < vx_max:
             if (F_nor_total * tires()[0]) ** 2 - F_centripental ** 2 > 0:

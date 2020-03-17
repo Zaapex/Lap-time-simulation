@@ -50,7 +50,7 @@ max_ri = list()
 max_ro = list()
 radij = list()
 
-for radius in range(5, 100, 10):
+for radius in range(5, 155, 10):
     max_vel_fi = max_velocity_front_inner(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase,
                                               CoPy=CoPy,
                                               alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, mu=coef_friction, K=KF,
@@ -66,16 +66,35 @@ for radius in range(5, 100, 10):
                                          alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, mu=coef_friction, K=KR,
                                          d=track_width)
 
-    def vel_fi(x):
+    max_vel_fo = max_velocity_front_outer(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase,
+                                         CoPy=CoPy,
+                                         alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, mu=coef_friction, K=KR,
+                                         d=track_width)
+
+    def vel_fi():
         c4 = max_vel_fi[0]
         c2 = max_vel_fi[2]
         c0 = max_vel_fi[4]
+        speed = list()
+        value = list()
+        for x in range(5, 45, 5):
+            k = c4 * x ** 4 + c2 * x ** 2 + c0
+            speed.append(x)
+            value.append(k)
+        plt.plot(speed, value, label=radius)
         return (c4 * x ** 4 + c2 * x ** 2 + c0)
 
-    def vel_ri(x):
+    def vel_ri():
         c4 = max_vel_ri[0]
         c2 = max_vel_ri[2]
         c0 = max_vel_ri[4]
+        speed = list()
+        value = list()
+        for x in range(5, 45, 5):
+            k = c4 * x ** 4 + c2 * x ** 2 + c0
+            speed.append(x)
+            value.append(k)
+        plt.plot(speed, value, label=radius)
         return (c4 * x ** 4 + c2 * x ** 2 + c0)
 
     def vel_ro():
@@ -84,13 +103,25 @@ for radius in range(5, 100, 10):
         c0 = max_vel_ro[4]
         speed = list()
         value = list()
-        for x in range(100, 10000, 500):
+        for x in range(5, 45, 5):
             k = c4 * x ** 4 + c2 * x ** 2 + c0
             speed.append(x)
             value.append(k)
         plt.plot(speed, value, label=radius)
 
-    vel_ro()
+    def vel_fo():
+        c4 = max_vel_fo[0]
+        c2 = max_vel_fo[2]
+        c0 = max_vel_fo[4]
+        speed = list()
+        value = list()
+        for x in range(5, 45, 5):
+            k = c4 * x ** 4 + c2 * x ** 2 + c0
+            speed.append(x)
+            value.append(k)
+        plt.plot(speed, value, label=radius)
+
+    vel_fo()
         #return (c4 * x ** 4 + c2 * x ** 2 + c0)
 
     """root_fi = optimize.newton(vel_fi, v_max_teo, maxiter=10000)
@@ -101,6 +132,10 @@ for radius in range(5, 100, 10):
     max_fi.append(root_fi)
     max_ri.append(root_ri)
     max_ro.append(root_ro)"""
+plt.xlabel('Hitrost [m/s]')
+plt.ylabel("F_pospešek [N]")
+plt.title("Sila pospeška, prednja zunanja guma")
+plt.ylim(0, 10000000)
 plt.legend()
 plt.show()
 """plt.plot(radij, max_fi, "g.", label="front inner")
