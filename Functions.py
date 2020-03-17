@@ -147,27 +147,29 @@ def max_velocity_front_inner(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, 
 
     m_rear = m * b / l
     m_front = m * a / l
+    x = 0
 
-    c4 = 0.25*(1.0*CoPy**2*alfa_cl**2*d**2*mu**2*r**2 + 2.0*CoPy*CoPz*alfa_cd*alfa_cl*d**2*mu**2*r**2 +
-               2.0*CoPy*alfa_cd*alfa_cl*d**2*h*mu**2*r**2 + 2.0*CoPy*alfa_cd*alfa_cl*d**2*mu**2*r**2*w -
-               2.0*CoPy*alfa_cl**2*d**2*l*mu**2*r**2 + 4.0*CoPy*alfa_cl*d*h*l*m_front*mu**2*r +
-               2.0*CoPy*alfa_cl*d*l*m_front*mu**2*r*w + 1.0*CoPz**2*alfa_cd**2*d**2*mu**2*r**2 +
-               2.0*CoPz*alfa_cd**2*d**2*h*mu**2*r**2 + 2.0*CoPz*alfa_cd**2*d**2*mu**2*r**2*w -
-               2.0*CoPz*alfa_cd*alfa_cl*d**2*l*mu**2*r**2 + 4.0*CoPz*alfa_cd*d*h*l*m_front*mu**2*r +
-               2.0*CoPz*alfa_cd*d*l*m_front*mu**2*r*w - 4.0*K**2*alfa_cd**2*d**2*l**2*r**2 +
-               1.0*alfa_cd**2*d**2*h**2*mu**2*r**2 + 2.0*alfa_cd**2*d**2*h*mu**2*r**2*w +
-               1.0*alfa_cd**2*d**2*mu**2*r**2*w**2 - 2.0*alfa_cd*alfa_cl*d**2*h*l*mu**2*r**2 -
-               .0*alfa_cd*alfa_cl*d**2*l*mu**2*r**2*w + 4.0*alfa_cd*d*h**2*l*m_front*mu**2*r +
-               6.0*alfa_cd*d*h*l*m_front*mu**2*r*w + 2.0*alfa_cd*d*l*m_front*mu**2*r*w**2 +
-               1.0*alfa_cl**2*d**2*l**2*mu**2*r**2 - 4.0*alfa_cl*d*h*l**2*m_front*mu**2*r -
-               2.0*alfa_cl*d*l**2*m_front*mu**2*r*w - 1.0*d**2*l**2*m_front**2 + 4.0*h**2*l**2*m_front**2*mu**2 +
-               4.0*h*l**2*m_front**2*mu**2*w + 1.0*l**2*m_front**2*mu**2*w**2)/(d**2*l**2*r**2)
+    c4 = 0.0625*(4.0*CoPy**2*alfa_cl**2*d**2*mu**2*r**2 + 8.0*CoPy*CoPz*alfa_cd*alfa_cl*d**2*mu**2*r**2 +
+                 4.0*CoPy*alfa_cd*alfa_cl*d**2*mu**2*r**2*w - 8.0*CoPy*alfa_cl**2*d**2*l*mu**2*r**2 +
+                 16.0*CoPy*alfa_cl*d*h*l*m_front*mu**2*r + 8.0*CoPy*alfa_cl*d*l*m_front*mu**2*r*w +
+                 4.0*CoPz**2*alfa_cd**2*d**2*mu**2*r**2 + 4.0*CoPz*alfa_cd**2*d**2*mu**2*r**2*w -
+                 8.0*CoPz*alfa_cd*alfa_cl*d**2*l*mu**2*r**2 + 16.0*CoPz*alfa_cd*d*h*l*m_front*mu**2*r +
+                 8.0*CoPz*alfa_cd*d*l*m_front*mu**2*r*w - 16.0*K**2*alfa_cd**2*d**2*l**2*r**2 +
+                 1.0*alfa_cd**2*d**2*mu**2*r**2*w**2 - 4.0*alfa_cd*alfa_cl*d**2*l*mu**2*r**2*w +
+                 8.0*alfa_cd*d*h*l*m_front*mu**2*r*w + 4.0*alfa_cd*d*l*m_front*mu**2*r*w**2 +
+                 4.0*alfa_cl**2*d**2*l**2*mu**2*r**2 - 16.0*alfa_cl*d*h*l**2*m_front*mu**2*r -
+                 8.0*alfa_cl*d*l**2*m_front*mu**2*r*w - 4.0*d**2*l**2*m_front**2 + 16.0*h**2*l**2*m_front**2*mu**2 +
+                 16.0*h*l**2*m_front**2*mu**2*w + 4.0*l**2*m_front**2*mu**2*w**2)/(d**2*l**2*r**2)
 
-    c2 = 0.5*(-1.0*CoPy*alfa_cl*b*d*g*m*mu**2*r - 1.0*CoPz*alfa_cd*b*d*g*m*mu**2*r - 1.0*alfa_cd*b*d*g*h*m*mu**2*r -
-              1.0*alfa_cd*b*d*g*m*mu**2*r*w + 1.0*alfa_cl*b*d*g*l*m*mu**2*r - 2.0*b*g*h*l*m*m_front*mu**2 -
-              1.0*b*g*l*m*m_front*mu**2*w)/(d*l**2*r)
+    c2 = 0.125*(-4.0*CoPy*alfa_cl*b*d*g*m*mu**2*r + 4.0*CoPy*alfa_cl*d*h*m*mu**2*r*x + 2.0*CoPy*alfa_cl*d*m*mu**2*r*w*x
+                - 4.0*CoPz*alfa_cd*b*d*g*m*mu**2*r + 4.0*CoPz*alfa_cd*d*h*m*mu**2*r*x + 2.0*CoPz*alfa_cd*d*m*mu**2*r*w*x
+                - 2.0*alfa_cd*b*d*g*m*mu**2*r*w + 2.0*alfa_cd*d*h*m*mu**2*r*w*x + 1.0*alfa_cd*d*m*mu**2*r*w**2*x +
+                4.0*alfa_cl*b*d*g*l*m*mu**2*r - 4.0*alfa_cl*d*h*l*m*mu**2*r*x - 2.0*alfa_cl*d*l*m*mu**2*r*w*x -
+                8.0*b*g*h*l*m*m_front*mu**2 - 4.0*b*g*l*m*m_front*mu**2*w + 8.0*h**2*l*m*m_front*mu**2*x +
+                8.0*h*l*m*m_front*mu**2*w*x + 2.0*l*m*m_front*mu**2*w**2*x)/(d*l**2*r)
 
-    c0 = 0.25*b**2*g**2*m**2*mu**2/l**2
+    c0 = 0.0625*(4.0*b**2*g**2*m**2*mu**2 - 8.0*b*g*h*m**2*mu**2*x - 4.0*b*g*m**2*mu**2*w*x + 4.0*h**2*m**2*mu**2*x**2
+                 + 4.0*h*m**2*mu**2*w*x**2 + 1.0*m**2*mu**2*w**2*x**2)/l**2
 
     coeff = [c4, 0, c2, 0, c0]
 
@@ -178,28 +180,30 @@ def max_velocity_front_outer(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, 
 
     m_rear = m * b / l
     m_front = m * a / l
+    x = 0
 
-    c4 = 0.25*(1.0*CoPy**2*alfa_cl**2*d**2*mu**2*r**2 + 2.0*CoPy*CoPz*alfa_cd*alfa_cl*d**2*mu**2*r**2 +
-               2.0*CoPy*alfa_cd*alfa_cl*d**2*h*mu**2*r**2 + 2.0*CoPy*alfa_cd*alfa_cl*d**2*mu**2*r**2*w -
-               2.0*CoPy*alfa_cl**2*d**2*l*mu**2*r**2 - 4.0*CoPy*alfa_cl*d*h*l*m_front*mu**2*r -
-               2.0*CoPy*alfa_cl*d*l*m_front*mu**2*r*w + 1.0*CoPz**2*alfa_cd**2*d**2*mu**2*r**2 +
-               2.0*CoPz*alfa_cd**2*d**2*h*mu**2*r**2 + 2.0*CoPz*alfa_cd**2*d**2*mu**2*r**2*w -
-               2.0*CoPz*alfa_cd*alfa_cl*d**2*l*mu**2*r**2 - 4.0*CoPz*alfa_cd*d*h*l*m_front*mu**2*r -
-               2.0*CoPz*alfa_cd*d*l*m_front*mu**2*r*w - 4.0*K**2*alfa_cd**2*d**2*l**2*r**2 +
-               1.0*alfa_cd**2*d**2*h**2*mu**2*r**2 + 2.0*alfa_cd**2*d**2*h*mu**2*r**2*w +
-               1.0*alfa_cd**2*d**2*mu**2*r**2*w**2 - 2.0*alfa_cd*alfa_cl*d**2*h*l*mu**2*r**2 -
-               2.0*alfa_cd*alfa_cl*d**2*l*mu**2*r**2*w - 4.0*alfa_cd*d*h**2*l*m_front*mu**2*r -
-               6.0*alfa_cd*d*h*l*m_front*mu**2*r*w - 2.0*alfa_cd*d*l*m_front*mu**2*r*w**2 +
-               1.0*alfa_cl**2*d**2*l**2*mu**2*r**2 + 4.0*alfa_cl*d*h*l**2*m_front*mu**2*r +
-               2.0*alfa_cl*d*l**2*m_front*mu**2*r*w - 1.0*d**2*l**2*m_front**2 + 4.0*h**2*l**2*m_front**2*mu**2 +
-               4.0*h*l**2*m_front**2*mu**2*w + 1.0*l**2*m_front**2*mu**2*w**2)/(d**2*l**2*r**2)
+    c4 = 0.0625*(4.0*CoPy**2*alfa_cl**2*d**2*mu**2*r**2 + 8.0*CoPy*CoPz*alfa_cd*alfa_cl*d**2*mu**2*r**2 +
+                 4.0*CoPy*alfa_cd*alfa_cl*d**2*mu**2*r**2*w - 8.0*CoPy*alfa_cl**2*d**2*l*mu**2*r**2 -
+                 16.0*CoPy*alfa_cl*d*h*l*m_front*mu**2*r - 8.0*CoPy*alfa_cl*d*l*m_front*mu**2*r*w +
+                 4.0*CoPz**2*alfa_cd**2*d**2*mu**2*r**2 + 4.0*CoPz*alfa_cd**2*d**2*mu**2*r**2*w -
+                 8.0*CoPz*alfa_cd*alfa_cl*d**2*l*mu**2*r**2 - 16.0*CoPz*alfa_cd*d*h*l*m_front*mu**2*r -
+                 8.0*CoPz*alfa_cd*d*l*m_front*mu**2*r*w - 16.0*K**2*alfa_cd**2*d**2*l**2*r**2 +
+                 1.0*alfa_cd**2*d**2*mu**2*r**2*w**2 - 4.0*alfa_cd*alfa_cl*d**2*l*mu**2*r**2*w -
+                 8.0*alfa_cd*d*h*l*m_front*mu**2*r*w - 4.0*alfa_cd*d*l*m_front*mu**2*r*w**2 +
+                 4.0*alfa_cl**2*d**2*l**2*mu**2*r**2 + 16.0*alfa_cl*d*h*l**2*m_front*mu**2*r +
+                 8.0*alfa_cl*d*l**2*m_front*mu**2*r*w - 4.0*d**2*l**2*m_front**2 + 16.0*h**2*l**2*m_front**2*mu**2 +
+                 16.0*h*l**2*m_front**2*mu**2*w + 4.0*l**2*m_front**2*mu**2*w**2)/(d**2*l**2*r**2)
 
-    c2 = 0.5*(-1.0*CoPy*alfa_cl*b*d*g*m*mu**2*r - 1.0*CoPz*alfa_cd*b*d*g*m*mu**2*r - 1.0*alfa_cd*b*d*g*h*m*mu**2*r -
-              1.0*alfa_cd*b*d*g*m*mu**2*r*w + 1.0*alfa_cl*b*d*g*l*m*mu**2*r + 2.0*b*g*h*l*m*m_front*mu**2 +
-              1.0*b*g*l*m*m_front*mu**2*w)/(d*l**2*r)
+    c2 = 0.125*(-4.0*CoPy*alfa_cl*b*d*g*m*mu**2*r + 4.0*CoPy*alfa_cl*d*h*m*mu**2*r*x + 2.0*CoPy*alfa_cl*d*m*mu**2*r*w*x
+                - 4.0*CoPz*alfa_cd*b*d*g*m*mu**2*r + 4.0*CoPz*alfa_cd*d*h*m*mu**2*r*x + 2.0*CoPz*alfa_cd*d*m*mu**2*r*w*x
+                - 2.0*alfa_cd*b*d*g*m*mu**2*r*w + 2.0*alfa_cd*d*h*m*mu**2*r*w*x + 1.0*alfa_cd*d*m*mu**2*r*w**2*x +
+                4.0*alfa_cl*b*d*g*l*m*mu**2*r - 4.0*alfa_cl*d*h*l*m*mu**2*r*x - 2.0*alfa_cl*d*l*m*mu**2*r*w*x +
+                8.0*b*g*h*l*m*m_front*mu**2 + 4.0*b*g*l*m*m_front*mu**2*w - 8.0*h**2*l*m*m_front*mu**2*x -
+                8.0*h*l*m*m_front*mu**2*w*x - 2.0*l*m*m_front*mu**2*w**2*x)/(d*l**2*r)
 
 
-    c0 = 0.25*b**2*g**2*m**2*mu**2/l**2
+    c0 = 0.0625*(4.0*b**2*g**2*m**2*mu**2 - 8.0*b*g*h*m**2*mu**2*x - 4.0*b*g*m**2*mu**2*w*x + 4.0*h**2*m**2*mu**2*x**2
+                 + 4.0*h*m**2*mu**2*w*x**2 + 1.0*m**2*mu**2*w**2*x**2)/l**2
 
     coeff = [c4, 0, c2, 0, c0]
 
@@ -210,23 +214,29 @@ def max_velocity_rear_outer(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, r
 
     m_rear = m * b / l
     m_front = m * a / l
+    x = 0
 
-    c4 = 0.25*(1.0*CoPy**2*alfa_cl**2*d**2*mu**2*r**2 - 2.0*CoPy*CoPz*alfa_cd*alfa_cl*d**2*mu**2*r**2 +
-               2.0*CoPy*alfa_cd*alfa_cl*d**2*h*mu**2*r**2 - 2.0*CoPy*alfa_cl**2*d**2*l*mu**2*r**2 -
-               4.0*CoPy*alfa_cl*d*h*l*m_rear*mu**2*r - 2.0*CoPy*alfa_cl*d*l*m_rear*mu**2*r*w +
-               1.0*CoPz**2*alfa_cd**2*d**2*mu**2*r**2 - 2.0*CoPz*alfa_cd**2*d**2*h*mu**2*r**2 +
-               2.0*CoPz*alfa_cd*alfa_cl*d**2*l*mu**2*r**2 + 4.0*CoPz*alfa_cd*d*h*l*m_rear*mu**2*r +
-               2.0*CoPz*alfa_cd*d*l*m_rear*mu**2*r*w - 4.0*K**2*alfa_cd**2*d**2*l**2*r**2 +
-               1.0*alfa_cd**2*d**2*h**2*mu**2*r**2 - 2.0*alfa_cd*alfa_cl*d**2*h*l*mu**2*r**2 -
-               4.0*alfa_cd*d*h**2*l*m_rear*mu**2*r - 2.0*alfa_cd*d*h*l*m_rear*mu**2*r*w +
-               1.0*alfa_cl**2*d**2*l**2*mu**2*r**2 + 4.0*alfa_cl*d*h*l**2*m_rear*mu**2*r +
-               2.0*alfa_cl*d*l**2*m_rear*mu**2*r*w - 1.0*d**2*l**2*m_rear**2 + 4.0*h**2*l**2*m_rear**2*mu**2 +
-               4.0*h*l**2*m_rear**2*mu**2*w + 1.0*l**2*m_rear**2*mu**2*w**2)/(d**2*l**2*r**2)
+    c4 = 0.0625*(4.0*CoPy**2*alfa_cl**2*d**2*mu**2*r**2 - 8.0*CoPy*CoPz*alfa_cd*alfa_cl*d**2*mu**2*r**2 -
+                 4.0*CoPy*alfa_cd*alfa_cl*d**2*mu**2*r**2*w - 8.0*CoPy*alfa_cl**2*d**2*l*mu**2*r**2 -
+                 16.0*CoPy*alfa_cl*d*h*l*m_rear*mu**2*r - 8.0*CoPy*alfa_cl*d*l*m_rear*mu**2*r*w +
+                 4.0*CoPz**2*alfa_cd**2*d**2*mu**2*r**2 + 4.0*CoPz*alfa_cd**2*d**2*mu**2*r**2*w +
+                 8.0*CoPz*alfa_cd*alfa_cl*d**2*l*mu**2*r**2 + 16.0*CoPz*alfa_cd*d*h*l*m_rear*mu**2*r +
+                 8.0*CoPz*alfa_cd*d*l*m_rear*mu**2*r*w - 16.0*K**2*alfa_cd**2*d**2*l**2*r**2 +
+                 1.0*alfa_cd**2*d**2*mu**2*r**2*w**2 + 4.0*alfa_cd*alfa_cl*d**2*l*mu**2*r**2*w +
+                 8.0*alfa_cd*d*h*l*m_rear*mu**2*r*w + 4.0*alfa_cd*d*l*m_rear*mu**2*r*w**2 +
+                 4.0*alfa_cl**2*d**2*l**2*mu**2*r**2 + 16.0*alfa_cl*d*h*l**2*m_rear*mu**2*r +
+                 8.0*alfa_cl*d*l**2*m_rear*mu**2*r*w - 4.0*d**2*l**2*m_rear**2 + 16.0*h**2*l**2*m_rear**2*mu**2 +
+                 16.0*h*l**2*m_rear**2*mu**2*w + 4.0*l**2*m_rear**2*mu**2*w**2)/(d**2*l**2*r**2)
 
-    c2 = 0.5*(-1.0*CoPy*a*alfa_cl*d*g*m*mu**2*r + 1.0*CoPz*a*alfa_cd*d*g*m*mu**2*r - 1.0*a*alfa_cd*d*g*h*m*mu**2*r +
-              1.0*a*alfa_cl*d*g*l*m*mu**2*r + 2.0*a*g*h*l*m*m_rear*mu**2 + 1.0*a*g*l*m*m_rear*mu**2*w)/(d*l**2*r)
+    c2 = 0.125*(-4.0*CoPy*a*alfa_cl*d*g*m*mu**2*r - 4.0*CoPy*alfa_cl*d*h*m*mu**2*r*x - 2.0*CoPy*alfa_cl*d*m*mu**2*r*w*x
+                + 4.0*CoPz*a*alfa_cd*d*g*m*mu**2*r + 4.0*CoPz*alfa_cd*d*h*m*mu**2*r*x + 2.0*CoPz*alfa_cd*d*m*mu**2*r*w*x
+                + 2.0*a*alfa_cd*d*g*m*mu**2*r*w + 4.0*a*alfa_cl*d*g*l*m*mu**2*r + 8.0*a*g*h*l*m*m_rear*mu**2 +
+                4.0*a*g*l*m*m_rear*mu**2*w + 2.0*alfa_cd*d*h*m*mu**2*r*w*x + 1.0*alfa_cd*d*m*mu**2*r*w**2*x +
+                4.0*alfa_cl*d*h*l*m*mu**2*r*x + 2.0*alfa_cl*d*l*m*mu**2*r*w*x + 8.0*h**2*l*m*m_rear*mu**2*x +
+                8.0*h*l*m*m_rear*mu**2*w*x + 2.0*l*m*m_rear*mu**2*w**2*x)/(d*l**2*r)
 
-    c0 = 0.25*a**2*g**2*m**2*mu**2/l**2
+    c0 = 0.0625*(4.0*a**2*g**2*m**2*mu**2 + 8.0*a*g*h*m**2*mu**2*x + 4.0*a*g*m**2*mu**2*w*x + 4.0*h**2*m**2*mu**2*x**2
+                 + 4.0*h*m**2*mu**2*w*x**2 + 1.0*m**2*mu**2*w**2*x**2)/l**2
 
     coeff = [c4, 0, c2, 0, c0]
 
@@ -237,27 +247,29 @@ def max_velocity_rear_inner(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, r
 
     m_rear = m * b / l
     m_front = m * a / l
+    x = 0
 
-    c4 = 0.25*(1.0*CoPy**2*alfa_cl**2*d**2*mu**2*r**2 + 2.0*CoPy*CoPz*alfa_cd*alfa_cl*d**2*mu**2*r**2 +
-               2.0*CoPy*alfa_cd*alfa_cl*d**2*h*mu**2*r**2 + 2.0*CoPy*alfa_cd*alfa_cl*d**2*mu**2*r**2*w -
-               2.0*CoPy*alfa_cl**2*d**2*l*mu**2*r**2 + 4.0*CoPy*alfa_cl*d*h*l*m_rear*mu**2*r +
-               2.0*CoPy*alfa_cl*d*l*m_rear*mu**2*r*w + 1.0*CoPz**2*alfa_cd**2*d**2*mu**2*r**2 +
-               2.0*CoPz*alfa_cd**2*d**2*h*mu**2*r**2 + 2.0*CoPz*alfa_cd**2*d**2*mu**2*r**2*w -
-               2.0*CoPz*alfa_cd*alfa_cl*d**2*l*mu**2*r**2 + 4.0*CoPz*alfa_cd*d*h*l*m_rear*mu**2*r +
-               2.0*CoPz*alfa_cd*d*l*m_rear*mu**2*r*w - 4.0*K**2*alfa_cd**2*d**2*l**2*r**2 +
-               1.0*alfa_cd**2*d**2*h**2*mu**2*r**2 + 2.0*alfa_cd**2*d**2*h*mu**2*r**2*w +
-               1.0*alfa_cd**2*d**2*mu**2*r**2*w**2 - 2.0*alfa_cd*alfa_cl*d**2*h*l*mu**2*r**2 -
-               2.0*alfa_cd*alfa_cl*d**2*l*mu**2*r**2*w + 4.0*alfa_cd*d*h**2*l*m_rear*mu**2*r +
-               6.0*alfa_cd*d*h*l*m_rear*mu**2*r*w + 2.0*alfa_cd*d*l*m_rear*mu**2*r*w**2 +
-               1.0*alfa_cl**2*d**2*l**2*mu**2*r**2 - 4.0*alfa_cl*d*h*l**2*m_rear*mu**2*r -
-               2.0*alfa_cl*d*l**2*m_rear*mu**2*r*w - 1.0*d**2*l**2*m_rear**2 + 4.0*h**2*l**2*m_rear**2*mu**2 +
-               4.0*h*l**2*m_rear**2*mu**2*w + 1.0*l**2*m_rear**2*mu**2*w**2)/(d**2*l**2*r**2)
+    c4 = 0.0625*(4.0*CoPy**2*alfa_cl**2*d**2*mu**2*r**2 + 8.0*CoPy*CoPz*alfa_cd*alfa_cl*d**2*mu**2*r**2 +
+                 4.0*CoPy*alfa_cd*alfa_cl*d**2*mu**2*r**2*w - 8.0*CoPy*alfa_cl**2*d**2*l*mu**2*r**2 +
+                 16.0*CoPy*alfa_cl*d*h*l*m_rear*mu**2*r + 8.0*CoPy*alfa_cl*d*l*m_rear*mu**2*r*w +
+                 4.0*CoPz**2*alfa_cd**2*d**2*mu**2*r**2 + 4.0*CoPz*alfa_cd**2*d**2*mu**2*r**2*w -
+                 8.0*CoPz*alfa_cd*alfa_cl*d**2*l*mu**2*r**2 + 16.0*CoPz*alfa_cd*d*h*l*m_rear*mu**2*r +
+                 8.0*CoPz*alfa_cd*d*l*m_rear*mu**2*r*w - 16.0*K**2*alfa_cd**2*d**2*l**2*r**2 +
+                 1.0*alfa_cd**2*d**2*mu**2*r**2*w**2 - 4.0*alfa_cd*alfa_cl*d**2*l*mu**2*r**2*w +
+                 8.0*alfa_cd*d*h*l*m_rear*mu**2*r*w + 4.0*alfa_cd*d*l*m_rear*mu**2*r*w**2 +
+                 4.0*alfa_cl**2*d**2*l**2*mu**2*r**2 - 16.0*alfa_cl*d*h*l**2*m_rear*mu**2*r -
+                 8.0*alfa_cl*d*l**2*m_rear*mu**2*r*w - 4.0*d**2*l**2*m_rear**2 + 16.0*h**2*l**2*m_rear**2*mu**2 +
+                 16.0*h*l**2*m_rear**2*mu**2*w + 4.0*l**2*m_rear**2*mu**2*w**2)/(d**2*l**2*r**2)
 
-    c2 = 0.5*(-1.0*CoPy*a*alfa_cl*d*g*m*mu**2*r - 1.0*CoPz*a*alfa_cd*d*g*m*mu**2*r - 1.0*a*alfa_cd*d*g*h*m*mu**2*r -
-              1.0*a*alfa_cd*d*g*m*mu**2*r*w + 1.0*a*alfa_cl*d*g*l*m*mu**2*r - 2.0*a*g*h*l*m*m_rear*mu**2 -
-              1.0*a*g*l*m*m_rear*mu**2*w)/(d*l**2*r)
+    c2 = 0.125*(-4.0*CoPy*a*alfa_cl*d*g*m*mu**2*r - 4.0*CoPy*alfa_cl*d*h*m*mu**2*r*x - 2.0*CoPy*alfa_cl*d*m*mu**2*r*w*x
+                - 4.0*CoPz*a*alfa_cd*d*g*m*mu**2*r - 4.0*CoPz*alfa_cd*d*h*m*mu**2*r*x - 2.0*CoPz*alfa_cd*d*m*mu**2*r*w*x
+                - 2.0*a*alfa_cd*d*g*m*mu**2*r*w + 4.0*a*alfa_cl*d*g*l*m*mu**2*r - 8.0*a*g*h*l*m*m_rear*mu**2 -
+                4.0*a*g*l*m*m_rear*mu**2*w - 2.0*alfa_cd*d*h*m*mu**2*r*w*x - 1.0*alfa_cd*d*m*mu**2*r*w**2*x +
+                4.0*alfa_cl*d*h*l*m*mu**2*r*x + 2.0*alfa_cl*d*l*m*mu**2*r*w*x - 8.0*h**2*l*m*m_rear*mu**2*x -
+                8.0*h*l*m*m_rear*mu**2*w*x - 2.0*l*m*m_rear*mu**2*w**2*x)/(d*l**2*r)
 
-    c0 = 0.25*a**2*g**2*m**2*mu**2/l**2
+    c0 = 0.0625*(4.0*a**2*g**2*m**2*mu**2 + 8.0*a*g*h*m**2*mu**2*x + 4.0*a*g*m**2*mu**2*w*x + 4.0*h**2*m**2*mu**2*x**2
+                 + 4.0*h*m**2*mu**2*w*x**2 + 1.0*m**2*mu**2*w**2*x**2)/l**2
 
     coeff = [c4, 0, c2, 0, c0]
 

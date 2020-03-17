@@ -1,5 +1,6 @@
 from Functions import *
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 from scipy import optimize
 
@@ -12,8 +13,7 @@ def lap_time_simulation(track, formula_data):
     df = pd.read_csv(name_of_track, index_col=0, low_memory=False)
     df_data = pd.read_csv(formula_data, index_col=0)
 
-    initial_conditions = {"vx_initial": 0, "t_initial": 0, "a_initial": 7.4, "sigma_initial": 0, "vy_initial": 0,
-                      "ang_vel_initial": 0}
+    initial_conditions = {"vx_initial": 0, "t_initial": 0, "a_initial": 0}
 
     df.at[0, "vx_entry"] = initial_conditions["vx_initial"]
     df.at[0, "time"] = initial_conditions["t_initial"]
@@ -59,11 +59,6 @@ def lap_time_simulation(track, formula_data):
 
         radius = df.loc[x, 'R']  # get radius at this segment, between two points
 
-        max_Velocity_cal_rear = max_velocity_rear(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase,
-                                                  CoPy=CoPy, alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, W=W)
-
-        max_Velocity_force = v_max_teo
-
         max_vel_fi = max_velocity_front_inner(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase,
                                               CoPy=CoPy,
                                               alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, mu=coef_friction, K=KF,
@@ -97,8 +92,6 @@ def lap_time_simulation(track, formula_data):
             df.at[x, "vel_fi"] = v_max_teo
             df.at[x, "vel_ri"] = v_max_teo
             df.at[x, "vx_max"] = v_max_teo
-
-        #df.at[x, "vx_max"] = min(max_Velocity_cal_rear, max_Velocity_force)
 
     df.fillna(method="ffill", inplace=True)
 
