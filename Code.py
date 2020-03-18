@@ -52,6 +52,8 @@ def lap_time_simulation(track, formula_data):
     tire_radius = float(df_data["Value"][df_data.loc[df_data['Parameter'] == "Tire radius"].index[0]])
     gear_ratio = float(df_data["Value"][df_data.loc[df_data['Parameter'] == "Gear ratio"].index[0]])
     v_max_teo = max_rpm*math.pi*2*tire_radius/(60*gear_ratio)
+    max_torque = float(df_data["Value"][df_data.loc[df_data['Parameter'] == "Max torque"].index[0]])
+    max_rear_wheel_torque = max_torque*gear_ratio/tire_radius*2
 
 
     for x in range(len(df.index)):
@@ -102,6 +104,8 @@ def lap_time_simulation(track, formula_data):
         radius = df.loc[x, "R"]
         vx_max = df.loc[x, "vx_max"]
         s = df.loc[x, "s"]
+        mass_rear = mass * b / wheelbase
+        mass_front = mass * a / wheelbase
 
         # normal force on each tire
         f_nor_r_o = normal_force_rear_outer(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase, CoPy=CoPy,
@@ -121,33 +125,29 @@ def lap_time_simulation(track, formula_data):
 
         # some total forces on car
         F_centripental = (mass * vx_entry ** 2 / radius)
+        F_centripental_front = (mass_front*vx_entry**2/radius)
+        F_centripental_rear = (mass_rear * vx_entry ** 2 / radius)
         F_drag = alpha_drag() * vx_entry ** 2
         F_nor_total = f_nor_f_i + f_nor_f_o + f_nor_r_i + f_nor_r_o
 
 
-        if f_fri_r_o**2 - (F_centripental * f_nor_r_o / F_nor_total)**2 < 0:
-            print(x)
+        if f_fri_r_i**2 - (F_centripental_rear/2)**2 < 0:
+            F_acc_r_i = 0
+            F_acc_r_o = 0
         else:
-            F_acc_r_o = np.sqrt(f_fri_r_o ** 2 - (F_centripental * f_nor_r_o / F_nor_total) ** 2)
-            F_acc_r_i = np.sqrt(f_fri_r_i ** 2 - (F_centripental * f_nor_r_i / F_nor_total) ** 2)
-            F_acc_f_o = np.sqrt(f_fri_f_o ** 2 - (F_centripental * f_nor_f_o / F_nor_total) ** 2)
-            F_acc_f_i = np.sqrt(f_fri_f_i ** 2 - (F_centripental * f_nor_f_i / F_nor_total) ** 2)
-
+            F_acc_r_o = np.sqrt(f_fri_r_o ** 2 - (F_centripental_rear/2) ** 2)
+            F_acc_r_i = np.sqrt(f_fri_r_i ** 2 - (F_centripental_rear/2) ** 2)
+            #F_acc_f_o = np.sqrt(f_fri_f_o ** 2 - (F_centripental_front/2) ** 2)
+            #F_acc_f_i = np.sqrt(f_fri_f_i ** 2 - (F_centripental_front/2) ** 2)
 
         if vx_entry < vx_max:
-            if (F_nor_total * tires()[0]) ** 2 - F_centripental ** 2 > 0:
-                F_acceleration_1 = min(F_acc_r_o, F_acc_r_i)*2 - F_drag
-                F_limit = drive_train()[4] - F_drag
-                acc = min(F_acceleration_1, F_limit) / mass
-                vx_exit = np.sqrt(vx_entry ** 2 + 2 * s * acc)
-                df.at[x, "vx_exit"] = vx_exit
-                df.at[x + 1, "vx_entry"] = vx_exit
-                df.at[x + 1, "acceleration"] = acc
-
-            else:
-                df.at[x, "vx_exit"] = df.at[x, "vx_entry"]
-                df.at[x + 1, "vx_entry"] = df.at[x, "vx_entry"]
-                df.at[x + 1, "acceleration"] = df.at[x, "acceleration"]
+            F_acceleration_1 = min(F_acc_r_o, F_acc_r_i) * 2 - F_drag
+            F_limit = max_rear_wheel_torque - F_drag
+            acc = min(F_acceleration_1, F_limit) / mass
+            vx_exit = np.sqrt(vx_entry ** 2 + 2 * s * acc)
+            df.at[x, "vx_exit"] = vx_exit
+            df.at[x + 1, "vx_entry"] = vx_exit
+            df.at[x + 1, "acceleration"] = acc
 
         else:
             df.at[x, "vx_exit"] = vx_max
@@ -158,7 +158,6 @@ def lap_time_simulation(track, formula_data):
     df.fillna(method="ffill", inplace=True)
 
     for x in range(len(df.index) - 2, 0, -1):
-
         vx_entry = df.loc[x, 'vx_entry']
         vx_exit = df.loc[x, "vx_exit"]
         radius = df.loc[x, "R"]
@@ -209,8 +208,13 @@ def lap_time_simulation(track, formula_data):
                 pass
 
     plt.plot(list(range(len(df.index))), df["vx_max"][:], "g", label="V max")
-    plt.plot(list(range(len(df.index))), df["vx_entry"][:], "b", label="V entry")
-    plt.plot(list(range(len(df.index))), df["acceleration"][:], "r.", label="Acceleration")
+    plt.plot(list(range(len(df.index))), df["vx_entry"][:], "b", label="V vstopna")
+    plt.title("Vstopna in maksimalna hitrost")
+    plt.xlabel("Številka odseka")
+    plt.ylim(0, 40)
+    plt.ylabel("Hitrost [m/s]")
+    #plt.plot(list(range(len(df.index))), df["vx_entry"][:], "b", label="V entry")
+    #plt.plot(list(range(len(df.index))), df["acceleration"][:], "r.", label="Acceleration")
 
     """plt.plot(list(range(len(df.index))), df["vx_max"][:], "g.", label="V max")
     plt.plot(list(range(len(df.index))), df["vel_fi"][:], "b.", label="V front inner")
