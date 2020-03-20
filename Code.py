@@ -154,6 +154,7 @@ def lap_time_simulation(track, formula_data):
             df.at[x + 1, "vx_entry"] = vx_max
             df.at[x + 1, "acceleration"] = 0
 
+    #print(df[-10:-1])
 
     df.fillna(method="ffill", inplace=True)
 
@@ -165,8 +166,10 @@ def lap_time_simulation(track, formula_data):
 
         s = df.loc[x, "s"]
 
-        F_centripental = (mass * vx_entry ** 2 / radius)
-        F_drag = alpha_Cd* vx_entry ** 2
+        F_centripental_front = (mass_front * vx_exit ** 2 / radius)
+        F_centripental_rear = (mass_rear * vx_exit ** 2 / radius)
+        F_centripental = mass*vx_exit**2/radius
+        F_drag = alpha_Cd* vx_exit ** 2
 
         # normal force on each tire
         f_nor_r_o = normal_force_rear_outer(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase, CoPy=CoPy,
@@ -184,35 +187,35 @@ def lap_time_simulation(track, formula_data):
         f_fri_f_o = f_nor_f_o * coef_friction
         f_fri_f_i = f_nor_f_i * coef_friction
 
-        F_friction = min(f_fri_r_o, f_fri_r_i)*2 + min(f_fri_f_o, f_fri_f_i)*2
+        F_front_brake = (f_fri_f_o + f_fri_f_i)/2
+        F_rear_brake = (f_fri_r_o + f_fri_r_i) / 2
 
-
-        if F_friction ** 2 - F_centripental ** 2 < 0:
-            max_deceleration = 0
-            new_v_entry = np.sqrt(vx_exit ** 2 - 2 * max_deceleration * s)
-            df.at[x, "vx_entry"] = new_v_entry
-            df.at[x - 1, "vx_exit"] = new_v_entry
-            df.at[x, "acceleration"] = max_deceleration
-        else:
-            F_braking = np.sqrt(F_friction ** 2 - F_centripental ** 2)
+        if vx_entry > vx_exit:
+            F_brake_r_o = np.sqrt(F_rear_brake ** 2 - (F_centripental_rear / 2) ** 2)
+            F_brake_f_o = np.sqrt(F_front_brake ** 2 - (F_centripental_front / 2) ** 2)
+            F_braking = np.sqrt((F_brake_f_o*2 + F_brake_r_o*2) ** 2 - F_centripental ** 2)
             F_deceleretion = F_drag + F_braking
             max_deceleration = -F_deceleretion / mass
 
-            if vx_entry > vx_exit:
+            if max_deceleration > -(vx_exit - vx_entry)**2/s:
                 new_v_entry = np.sqrt(vx_exit ** 2 - 2 * max_deceleration * s)
                 df.at[x, "vx_entry"] = new_v_entry
                 df.at[x - 1, "vx_exit"] = new_v_entry
                 df.at[x, "acceleration"] = max_deceleration
 
             else:
-                pass
+                df.at[x, "acceleration"] = -(vx_exit - vx_entry)**2/s
 
+
+    #print(df[-10:-1])
+    plt.plot(list(range(len(df.index))), df["acceleration"][:], "r.", label="Pospešek")
     plt.plot(list(range(len(df.index))), df["vx_max"][:], "g", label="V max")
     plt.plot(list(range(len(df.index))), df["vx_entry"][:], "b", label="V vstopna")
-    plt.title("Vstopna in maksimalna hitrost")
+    plt.title("Vstopna in maksimalna hitrost ter pojemek")
     plt.xlabel("Številka odseka")
-    plt.ylim(0, 40)
-    plt.ylabel("Hitrost [m/s]")
+    plt.ylim(-40, 40)
+    plt.ylabel("Hitrost [m/s]" "\n"
+               "Pojemek [m/s^2]")
     #plt.plot(list(range(len(df.index))), df["vx_entry"][:], "b", label="V entry")
     #plt.plot(list(range(len(df.index))), df["acceleration"][:], "r.", label="Acceleration")
 
@@ -227,7 +230,6 @@ def lap_time_simulation(track, formula_data):
 
     plt.legend()
     plt.show()
-
     df.fillna(method="ffill", inplace=True)
 
 
@@ -246,3 +248,4 @@ def lap_time_simulation(track, formula_data):
 
     print(df["time"].sum())
     return df["time"].sum()
+
