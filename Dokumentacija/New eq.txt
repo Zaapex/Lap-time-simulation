@@ -1,3 +1,0 @@
-Normal_Force = ((a * m * g - (h + w / 2) * m*acc+ alfa_cl * v ** 2 * (
-            l - CoPy) + alfa_cd * v ** 2 * ((w / 2) + CoPz)) / (2 * l)) + m_rear * v ** 2 / (d * r) * (
-                                        (2 * h + w) / 2)

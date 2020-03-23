@@ -249,3 +249,26 @@ def lap_time_simulation(track, formula_data):
     print(df["time"].sum())
     return df["time"].sum()
 
+
+author = input("Author: ")
+name_of_sim = input("Name of Simulation: ")
+notes = input("Notes: ")
+select_track = input("Track name: ")
+selected_settings = input("Data name: ")
+
+
+df = pd.read_csv(selected_settings)
+
+f = open(name_of_sim + ".txt", "w+")
+
+f.write("Author: " + str(author) + "\n")
+f.write("Name of Simulation: " + str(name_of_sim) + "\n")
+f.write("Notes: " + str(notes) + "\n")
+
+for line in range(len(df.index)):
+    f.write(df["Parameter"][line] + ": " + df["Value"][line] + "\n")
+
+lap_time = lap_time_simulation(select_track, selected_settings)
+
+f.write("Total time: " + str(lap_time) + "\n")
+f.close()
