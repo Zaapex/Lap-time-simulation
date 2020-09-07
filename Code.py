@@ -8,7 +8,7 @@ pd.set_option('display.max_rows', 100)
 pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 1000)
 
-def lap_time_simulation(track, formula_data):
+def lap_time_simulation(track, formula_data, simulations_name):
     name_of_track = "Tracks/" + track + ".csv"
     df = pd.read_csv(name_of_track, index_col=0, low_memory=False)
     df_data = pd.read_csv(formula_data, index_col=0)
@@ -47,6 +47,8 @@ def lap_time_simulation(track, formula_data):
     g = 9.81
     a = wheelbase*CG/100
     b = wheelbase*(100-CG)/100
+    mass_rear = mass * b / wheelbase
+    mass_front = mass * a / wheelbase
     w = float(df_data["Value"][df_data.loc[df_data['Parameter'] == "Tire radius"].index[0]])*2
     max_rpm = float(df_data["Value"][df_data.loc[df_data['Parameter'] == "Max RPM"].index[0]])
     tire_radius = float(df_data["Value"][df_data.loc[df_data['Parameter'] == "Tire radius"].index[0]])
@@ -55,11 +57,14 @@ def lap_time_simulation(track, formula_data):
     max_torque = float(df_data["Value"][df_data.loc[df_data['Parameter'] == "Max torque"].index[0]])
     max_rear_wheel_torque = max_torque*gear_ratio/tire_radius*2
 
+    # braking system parameters
+    brake_bias = float(df_data["Value"][df_data.loc[df_data['Parameter'] == "Brake bias"].index[0]])
 
     for x in range(len(df.index)):
         """"Here we calculate max velocity in given corner"""
 
-        radius = df.loc[x, 'R']  # get radius at this segment, between two points
+        # track width added to the radius -> we need the center of the car
+        radius = df.loc[x, 'R'] + track_width/2  # get radius at this segment, between two points
 
         max_vel_fi = max_velocity_front_inner(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase,
                                               CoPy=CoPy,
@@ -89,7 +94,7 @@ def lap_time_simulation(track, formula_data):
 
             df.at[x, "vel_fi"] = root_fi
             df.at[x, "vel_ri"] = root_ri
-            df.at[x, "vx_max"] = (root_fi + root_ri)/2
+            df.at[x, "vx_max"] = min(root_fi, root_ri)  # (root_fi + root_ri)/2
         else:
             df.at[x, "vel_fi"] = v_max_teo
             df.at[x, "vel_ri"] = v_max_teo
@@ -101,11 +106,9 @@ def lap_time_simulation(track, formula_data):
 
         vx_entry = df.loc[x, 'vx_entry']  # entry velocity in this section
         acc_x = df.loc[x, "acceleration"]
-        radius = df.loc[x, "R"]
+        radius = df.loc[x, "R"] + track_width/2
         vx_max = df.loc[x, "vx_max"]
         s = df.loc[x, "s"]
-        mass_rear = mass * b / wheelbase
-        mass_front = mass * a / wheelbase
 
         # normal force on each tire
         f_nor_r_o = normal_force_rear_outer(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase, CoPy=CoPy,
@@ -145,41 +148,47 @@ def lap_time_simulation(track, formula_data):
             F_limit = max_rear_wheel_torque - F_drag
             acc = min(F_acceleration_1, F_limit) / mass
             vx_exit = np.sqrt(vx_entry ** 2 + 2 * s * acc)
-            df.at[x, "vx_exit"] = vx_exit
-            df.at[x + 1, "vx_entry"] = vx_exit
-            df.at[x + 1, "acceleration"] = acc
+
+            if vx_exit < vx_max:
+                df.at[x, "vx_exit"] = vx_exit
+                df.at[x + 1, "vx_entry"] = vx_exit
+                df.at[x + 1, "acceleration"] = acc
+
+            else:
+                df.at[x, "vx_exit"] = vx_max
+                df.at[x + 1, "vx_entry"] = vx_max
+                df.at[x + 1, "acceleration"] = acc
 
         else:
             df.at[x, "vx_exit"] = vx_max
             df.at[x + 1, "vx_entry"] = vx_max
             df.at[x + 1, "acceleration"] = 0
 
-    #print(df[-10:-1])
 
     df.fillna(method="ffill", inplace=True)
 
     for x in range(len(df.index) - 2, 0, -1):
         vx_entry = df.loc[x, 'vx_entry']
         vx_exit = df.loc[x, "vx_exit"]
-        radius = df.loc[x, "R"]
+        radius = df.loc[x, "R"] + track_width/2
         acc_x = df.loc[x+1, "acceleration"]
+        vx_max = df.loc[x, "vx_max"]
 
         s = df.loc[x, "s"]
 
         F_centripental_front = (mass_front * vx_exit ** 2 / radius)
         F_centripental_rear = (mass_rear * vx_exit ** 2 / radius)
-        F_centripental = mass*vx_exit**2/radius
-        F_drag = alpha_Cd* vx_exit ** 2
+        F_drag = alpha_Cd * vx_exit ** 2
 
         # normal force on each tire
         f_nor_r_o = normal_force_rear_outer(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase, CoPy=CoPy,
-                                            alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=track_width, v=vx_entry, acc=acc_x)
+                                            alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=track_width, v=vx_exit, acc=acc_x)
         f_nor_r_i = normal_force_rear_inner(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase, CoPy=CoPy,
-                                            alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=track_width, v=vx_entry, acc=acc_x)
+                                            alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=track_width, v=vx_exit, acc=acc_x)
         f_nor_f_o = normal_force_front_outer(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase, CoPy=CoPy,
-                                             alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=track_width, v=vx_entry, acc=acc_x)
+                                             alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=track_width, v=vx_exit, acc=acc_x)
         f_nor_f_i = normal_force_front_inner(a, b, m=mass, g=g, h=height_CG, w=w, alfa_cl=alpha_Cl, l=wheelbase, CoPy=CoPy,
-                                             alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=track_width, v=vx_entry, acc=acc_x)
+                                             alfa_cd=alpha_Cd, CoPz=CoPz, r=radius, d=track_width, v=vx_exit, acc=acc_x)
 
         # friction force for each tire
         f_fri_r_o = f_nor_r_o * coef_friction
@@ -187,27 +196,36 @@ def lap_time_simulation(track, formula_data):
         f_fri_f_o = f_nor_f_o * coef_friction
         f_fri_f_i = f_nor_f_i * coef_friction
 
-        F_front_brake = (f_fri_f_o + f_fri_f_i)/2
-        F_rear_brake = (f_fri_r_o + f_fri_r_i) / 2
+        # average of inner and outer tire friction
+        F_front_friction = min(f_fri_f_o, f_fri_f_i)  # (f_fri_f_o + f_fri_f_i)/2
+        F_rear_friction = min(f_fri_r_o, f_fri_r_i)  # (f_fri_r_o + f_fri_r_i)/2
 
         if vx_entry > vx_exit:
-            F_brake_r_o = np.sqrt(F_rear_brake ** 2 - (F_centripental_rear / 2) ** 2)
-            F_brake_f_o = np.sqrt(F_front_brake ** 2 - (F_centripental_front / 2) ** 2)
-            F_braking = np.sqrt((F_brake_f_o*2 + F_brake_r_o*2) ** 2 - F_centripental ** 2)
-            F_deceleretion = F_drag + F_braking
-            max_deceleration = -F_deceleretion / mass
+            F_brake_r_o = np.sqrt(F_rear_friction ** 2 - (F_centripental_rear / 2) ** 2)
+            F_brake_f_o = np.sqrt(F_front_friction ** 2 - (F_centripental_front / 2) ** 2)
 
-            if max_deceleration > -(vx_exit - vx_entry)**2/s:
-                new_v_entry = np.sqrt(vx_exit ** 2 - 2 * max_deceleration * s)
-                df.at[x, "vx_entry"] = new_v_entry
-                df.at[x - 1, "vx_exit"] = new_v_entry
-                df.at[x, "acceleration"] = max_deceleration
+            """if F_front_friction ** 2 - (F_centripental_front / 2) ** 2 < 0:
+                print(x, "front problem", F_front_friction, F_centripental_front)
 
+            if F_rear_friction ** 2 - (F_centripental_rear / 2) ** 2 < 0:
+                print(x, "rear problem", F_rear_friction, F_centripental_rear)"""
+
+            # added brake bias
+            if F_brake_f_o*brake_bias/100 < F_brake_r_o*(100-brake_bias)/100:
+                F_braking = F_brake_f_o*4
+                print(x, "front braking")
             else:
-                df.at[x, "acceleration"] = -(vx_exit - vx_entry)**2/s
+                F_braking = F_brake_r_o*4
+                print(x, "Rear braking")
 
+            F_deceleretion = F_drag + F_braking
+            max_deceleration = - F_deceleretion / mass
 
-    #print(df[-10:-1])
+            new_v_entry = np.sqrt(vx_exit ** 2 - 2 * max_deceleration * s)
+            df.at[x, "vx_entry"] = new_v_entry
+            df.at[x - 1, "vx_exit"] = new_v_entry
+            df.at[x, "acceleration"] = max_deceleration
+
     plt.plot(list(range(len(df.index))), df["acceleration"][:], "r.", label="Pospešek")
     plt.plot(list(range(len(df.index))), df["vx_max"][:], "g", label="V max")
     plt.plot(list(range(len(df.index))), df["vx_entry"][:], "b", label="V vstopna")
@@ -215,7 +233,7 @@ def lap_time_simulation(track, formula_data):
     plt.xlabel("Številka odseka")
     plt.ylim(-40, 40)
     plt.ylabel("Hitrost [m/s]" "\n"
-               "Pojemek [m/s^2]")
+               "Pojemek [m/s²]")
     #plt.plot(list(range(len(df.index))), df["vx_entry"][:], "b", label="V entry")
     #plt.plot(list(range(len(df.index))), df["acceleration"][:], "r.", label="Acceleration")
 
@@ -232,7 +250,6 @@ def lap_time_simulation(track, formula_data):
     plt.show()
     df.fillna(method="ffill", inplace=True)
 
-
     for x in range(len(df.index)):
         vx_entry = df.loc[x, 'vx_entry']
         vx_exit = df.loc[x, "vx_exit"]
@@ -247,19 +264,27 @@ def lap_time_simulation(track, formula_data):
         t_total = df["time"].sum()
 
     print(df["time"].sum())
+
+    df.at[0, "pot"] = df.loc[0, "s"]
+    for x in range(len(df.index) - 1):
+        pot = df.loc[x, "pot"] + df.loc[x + 1, "s"]
+        df.at[x + 1, "pot"] = pot
+
+    df.to_csv("Simulations/csv/" + simulations_name)
+
     return df["time"].sum()
 
 
-author = input("Author: ")
-name_of_sim = input("Name of Simulation: ")
-notes = input("Notes: ")
-select_track = input("Track name: ")
-selected_settings = input("Data name: ")
+author = "alex" #input("Author: ")
+name_of_sim = "rep_test"  #input("Name of Simulation: ")
+notes = "no" #input("Notes: ")
+select_track = "Logatec" #input("Track name: ")
+selected_settings = "Svarog data" #input("Data name: ")
 
 
 df = pd.read_csv(selected_settings)
 
-f = open(name_of_sim + ".txt", "w+")
+f = open("Simulations/txt/" + name_of_sim + ".txt", "w+")
 
 f.write("Author: " + str(author) + "\n")
 f.write("Name of Simulation: " + str(name_of_sim) + "\n")
@@ -268,7 +293,7 @@ f.write("Notes: " + str(notes) + "\n")
 for line in range(len(df.index)):
     f.write(df["Parameter"][line] + ": " + df["Value"][line] + "\n")
 
-lap_time = lap_time_simulation(select_track, selected_settings)
+lap_time = lap_time_simulation(select_track, selected_settings, name_of_sim)
 
 f.write("Total time: " + str(lap_time) + "\n")
 f.close()
