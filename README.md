@@ -1,2 +1,2 @@
 # Lap-time-simulation
-A pyton project to simulate time needed
+A python project to simulate time needed

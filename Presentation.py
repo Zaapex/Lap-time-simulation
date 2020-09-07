@@ -36,14 +36,14 @@ def tire_data(tire_path):
 
         return df
 
-def acc_or_brake(name_of_track):
+def acc_or_brake(name_of_track, value):
         """Show on the map where we accelerate and where we are braking"""
 
-        df = name_of_track
+        df = pd.read_csv(name_of_track, index_col=0)
 
         x = df["x"]  # x, y track data and corresponding acceleration in that point
         y = df["y"]
-        a = df["acceleration"]
+        a = df[value]
 
         points = np.array([x, y]).T.reshape(-1, 1, 2)
         segments = np.concatenate([points[:-1], points[1:]], axis=1)
@@ -69,8 +69,8 @@ def acc_or_brake(name_of_track):
         line = axs[1].add_collection(lc)
         fig.colorbar(line, ax=axs[1])
 
-        axs[0].set_xlim(-42, 60)
-        axs[0].set_ylim(-150, 5)
+        axs[0].set_xlim(-20, 50)
+        axs[0].set_ylim(-5, 45)
         plt.xlabel("x [m]")
         plt.ylabel("y [m]")
         plt.show()

@@ -84,7 +84,7 @@ def add_new_points(name_of_track):
 
     # fit splines to x=f(u) and y=g(u), treating both as periodic. also note that s=2
     # is needed in order to force the spline fit to pass through all the input points.
-    tck, u = splprep([x, y], s=2)  # parameter s is important for smoothing
+    tck, u = splprep([x, y], s=4)  # parameter s is important for smoothing
 
     # evaluate the spline fits for (as many as you like) evenly spaced distance values
     xi, yi = splev(np.linspace(0, 1, 10000), tck)
@@ -102,40 +102,43 @@ def radius_of_corner(name_of_track):
 
     df = pd.read_csv(name_of_track, index_col=0)
 
-    for x in range(len(df.index) - 2):
-        A = np.array([df.loc[x, 'x'], df.loc[x, 'y']])
-        B = np.array([df.loc[x + 1, 'x'], df.loc[x + 1, 'y']])
-        C = np.array([df.loc[x + 2, 'x'], df.loc[x + 2, 'y']])
+    for x in range(2, len(df.index) - 2):
+        p1 = np.array([df.loc[x - 2, 'x'], df.loc[x - 2, 'y']])
+        p2 = np.array([df.loc[x - 1, 'x'], df.loc[x - 1, 'y']])
+        p3 = np.array([df.loc[x, 'x'], df.loc[x, 'y']])
+        p4 = np.array([df.loc[x + 1, 'x'], df.loc[x + 1, 'y']])
+        p5 = np.array([df.loc[x + 2, 'x'], df.loc[x + 2, 'y']])
 
-        AB = B - A
-        BC = C - B
-        AC = C - A
+        def radij(A, B, C):
 
-        a = np.linalg.norm(AB)
-        b = np.linalg.norm(BC)
-        c = np.linalg.norm(AC)
-        d = np.sqrt(2.0 * a ** 2 * b ** 2 +
+            AB = B - A
+            BC = C - B
+            AC = C - A
+
+            a = np.linalg.norm(AB)
+            b = np.linalg.norm(BC)
+            c = np.linalg.norm(AC)
+            d = np.sqrt(2.0 * a ** 2 * b ** 2 +
                     2.0 * b ** 2 * c ** 2 +
                     2.0 * c ** 2 * a ** 2 -
                     a ** 4 - b ** 4 - c ** 4)
 
-        A = np.array([df.loc[x, 'x'], df.loc[x, 'y']])
-        B = np.array([df.loc[x + 1, 'x'], df.loc[x + 1, 'y']])
-        s = np.sqrt((B[0] - A[0]) ** 2 + (B[1] - A[1]) ** 2)  # calculation of total distance in x and y direction
+            if d == 0:
+                # if their is no difference between this and previous point, radius is given as 0
+                r = 150
+                return r
+            else:
+                r = (a * b * c) / d
+                return r
+
+        radius = sum([radij(p1, p3, p5), radij(p2, p3, p4), radij(p1, p2, p3), radij(p3, p4, p5)])/4
+
+        t1 = np.array([df.loc[x, 'x'], df.loc[x, 'y']])
+        t2 = np.array([df.loc[x + 1, 'x'], df.loc[x + 1, 'y']])
+        s = np.sqrt((t2[0] - t1[0]) ** 2 + (t2[1] - t1[1]) ** 2)  # calculation of total distance in x and y direction
         df.at[x, "s"] = s
 
-        if d == 0:
-            # if their is no difference between this and previous point, radius is given as 0
-            r = 0
-            df.at[x, "R"] = math.floor(r)
-
-        else:
-            r = (a * b * c) / np.sqrt(2.0 * a ** 2 * b ** 2 +
-                                      2.0 * b ** 2 * c ** 2 +
-                                      2.0 * c ** 2 * a ** 2 -
-                                      a ** 4 - b ** 4 - c ** 4)
-            # calculation of the radius given three points
-            df.at[x, "R"] = math.floor(r)
+        df.at[x, "R"] = radius
 
     df.fillna(method="ffill",
               inplace=True)  # if error occurs, pandas gives NaN value. Automatic filled with previous value
@@ -176,7 +179,7 @@ def max_velocity_front_inner(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, 
     return coeff
 
 
-def max_velocity_front_outer(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, r, mu, K,d):
+def max_velocity_front_outer(a, b, m, g, h, w, alfa_cl, l, CoPy, alfa_cd, CoPz, r, mu, K, d):
 
     m_rear = m * b / l
     m_front = m * a / l

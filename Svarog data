@@ -3,15 +3,15 @@
 1,Mass,290
 2,CG in y,55
 3,CG in z,0.1
-4,Track width,1
+4,Track width,1.208
 5,Wheelbase,1.25
-6,W,0.4
+6,W,0.5
 7,Suspension,/
 8,Coefficient of Friction,1.4
 9,Aerodynamics,/
 10,Air density,1.225
 11,Frontal area,1.2
-12,Coefficient of DF,3.5
+12,Coefficient of DF,2.7
 13,Coefficient of Drag,1.7
 14,CoP in y,60
 15,CoP in z,0.1
@@ -21,3 +21,5 @@
 19,Max RPM,7600
 20,Gear ratio,5.45
 21,Max torque,90
+22,Braking system,/
+23,Brake bias,50
