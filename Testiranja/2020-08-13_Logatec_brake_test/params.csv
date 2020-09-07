@@ -1,0 +1,83 @@
+;Par.No, Par.Name, Par.value, Par.def,Par.Min, Par.Max, Comment,Type,Access level
+:ACCELERATION REQUEST SETUP
+1,AccrPedl min,-2600,0,-5000,5000,Out of range value - bellow this value is triggered pedal error,d,4
+2,AccrPedl max,-1400,5000,-5000,5000,Out of range value - above this value is triggered pedal error,d,4
+3,AccrPedl full,-1750,4999,-5000,5000,Pedal position at 100% request,d,4
+4,AccrPedl threshold,-2275,100,-5000,5000,Pedal is considered pressed above this value. Must be smaller or equal as dead zone,d,4
+5,AccrPedl dead zone,-2275,100,-5000,5000,Value correspond to 0%,d,4
+6,AccrPedl_rat up [%/s],1000,500,10,5000,Maximum gradient up,d,3
+7,AccrPedl_rat down [%/s],1000,500,10,5000,Maximum gradient down,d,3
+:ACCELERATION PLAUSIBILITY SETUP
+9,AccrPedl2 min,1000,0,-10000,10000,Out of range value - bellow this value is triggered pedal error,d,4
+10,AccrPedl2 max,8100,5000,-10000,10000,Out of range value - above this value is triggered pedal error,d,4
+11,AccrPedl2 full,2443,4999,-10000,10000,Pedal position at 100% request,d,4
+12,AccrPedl2 threshold,1918,100,-10000,10000,Pedal is considered pressed above this value. Must be smaller or equal as dead zone,d,4
+13,AccrPedl2 dead zone,1918,100,-10000,10000,Value correspond to 0%,d,4
+14,AccrPedl2_rat up [%/s],1000,500,10,5000,Maximum gradient up,d,3
+15,AccrPedl2_rat down [%/s],1000,500,10,5000,Maximum gradient down,d,3
+:BRAKE REQUEST SETUP
+17,BrkPedl min [mV],0,0,0,5000,Out of range value - bellow this value is triggered pedal error,d,2
+18,BrkPedl max [mV],5000,4500,0,5000,Out of range value - above this value is triggered pedal error,d,2
+19,BrkPedl full,2000,4400,0,5000,Pedal position at 100% request,d,2
+20,BrkPedl threshold,250,500,0,5000,Pedal is considered pressed above this value. Must be smaller or equal as dead zone,d,4
+21,BrkPedl dead zone,250,500,0,5000,Value correspond to 0%,d,4
+22,BrkPedl_rat up [%/s],1000,500,10,5000,Maximum gradient up,d,3
+23,BrkPedl_rat down [%/s],1000,500,10,5000,Maximum gradient down,d,3
+:DATA LOGGING AND TRACE
+25,Time between logs[s],1.000e-02,4.000e-03,4.000e-03,1.200e+01,Logging is activated when trigger condition is met,0.3e,3
+26,Real time log trigger type,3,0,0,3,0-positive edge trigger;1-negative edge trigger;2-after reset;3-External,d,3
+27,Real time log trigger level,0,50,-100000,10000,Trigger level for either rising of falling edge;0 - disable positive or negative edge trigger,d,3
+28,Real time log trigger variable,5,5,0,126,,d,3
+29,Real time log buffer length,0,2500,0,1000000,0-till full flash; > 0 -> set number of logs ( PCU reset required) after trigger condition is met,d,3
+30,Real time log hysteresis,1.000e+00,1.000e+00,0.000e+00,1.000e+04,Absolute value trigger hysteresis,0.2e,3
+31,Trace stream time[s],1.000e-01,1.000e-01,1.000e-01,3.000e+01,Set trace send interval,0.2e,3
+:APP SETUP
+33,Drive mode,1,1,0,2,[0-ECO;1-Normal;2-Torque],d,1
+34,Controlled inverters,3,3,0,15,[bit mask of inverters controlled by the PCU ],d,1
+35,Activated inverters,3,3,0,15,[bit mask of activated inverters],d,1
+36,Motor temp threshold[C],80,80,50,170,Above this temperature motor current is reduced,d,1
+37,Motor temp max[C],100,100,50,170,Above this temperature motor current is 0,d,1
+38,Battery temp threshold[C],50,50,0,170,Above this temperature power is reduced,d,1
+39,Battery temp max[C],60,58,0,170,Above this temperature power is 0,d,1
+40,Battery low Ucell[V],2.800e+00,2.600e+00,0.000e+00,5.000e+00,Below this voltage power is reduced,0.3e,1
+41,Pedal plausibility max error,1.000e-01,1.000e-01,0.000e+00,1.000e+00,Max error between accelerator pedal sensors,0.1e,3
+42,Pedal plausibility max time[ms],200,200,0,5000,Max duration of error,d,3
+:REGENERATION AND ABS
+44,ABS regeneration deactivation status,0,0,0,0,0-disabled; 1-enabled,d,1
+45,Start regeneration speed [RPM],30,30,5,200,,d,1
+46,Full regeneration at speed [RPM],130,130,10,400,,d,1
+:TRC2
+48,TRC2 activation status,1,0,0,1,0-disabled; 1-enabled,d,3
+49,Reference slip,1.500e-01,2.000e-01,0.000e+00,1.000e+00,Reference for PID controller,0.3e,3
+50,RPM ramp start,3.000e+02,1.000e+02,0.000e+00,9.999e+03,above this speed TRC intensity gradualy increases,0.1e,3
+51,RPM ramp end,4.000e+02,2.000e+02,0.000e+00,9.999e+03,at  this speed TRC reaches max intensity,0.1e,3
+52,TRC2 use speed cam,0,0,0,1,0-slowest wheel; 1-speed cam,d,3
+:TRC2 gain map
+54,RPM0,0.000e+00,0.000e+00,0.000e+00,5.000e+03,RPM 0,0.3e,3
+55,P0,2.500e+00,0.000e+00,0.000e+00,1.000e+02,P gain,0.3e,3
+56,I0,2.000e+00,0.000e+00,0.000e+00,1.000e+02,I gain,0.3e,3
+57,D0,0.000e+00,0.000e+00,0.000e+00,1.000e+02,D gain,0.3e,3
+58,RPM1,1.000e+03,1.500e+02,0.000e+00,5.000e+03,RPM 1,0.3e,3
+59,P1,2.500e+00,0.000e+00,0.000e+00,1.000e+02,P gain,0.3e,3
+60,I1,2.000e+00,0.000e+00,0.000e+00,1.000e+02,I gain,0.3e,3
+61,D1,0.000e+00,0.000e+00,0.000e+00,1.000e+02,D gain,0.3e,3
+62,RPM2,3.000e+03,3.000e+02,0.000e+00,5.000e+03,RPM 2,0.3e,3
+63,P2,5.000e+00,0.000e+00,0.000e+00,1.000e+02,P gain,0.3e,3
+64,I2,1.000e+00,0.000e+00,0.000e+00,1.000e+02,I gain,0.3e,3
+65,D2,0.000e+00,0.000e+00,0.000e+00,1.000e+02,D gain,0.3e,3
+:Power Limit  regulator
+67,Max power,5.500e+04,8.000e+04,0.000e+00,1.000e+05,,0.3e,3
+68,Max brake power,5.000e+03,0.000e+00,0.000e+00,1.000e+05,,0.3e,3
+69,Hall sensor gain,2.703e+02,0.000e+00,-1.000e+05,1.000e+05,,0.3e,3
+70,Hall sensor offset,-2.486e+00,0.000e+00,-1.000e+05,1.000e+05,,0.3e,3
+71,Traction IRMS,1.500e+02,1.500e+02,-1.000e+05,1.000e+05,,0.3e,3
+72,Regen IRMS,1.200e+01,1.200e+01,-1.000e+05,1.000e+05,,0.3e,3
+:Speed sensors
+74,Left sensor ID,4,0,0,31,,d,4
+75,Right sensor ID,2,0,0,31,,d,4
+:SpeedReg
+77,SpeedRegActive,0,1,0,1,,d,3
+78,Target speed,6.600e+03,1.000e+03,0.000e+00,8.000e+03,,0.3e,3
+79,Kp,3.000e+00,1.000e+00,0.000e+00,1.000e+02,,0.3e,3
+80,Ki,5.000e-02,0.000e+00,0.000e+00,1.000e+02,,0.3e,3
+;END

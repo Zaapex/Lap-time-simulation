@@ -1,0 +1,26 @@
+Author: alex
+Name of Simulation: test
+Notes: sad
+Basic: /
+Mass: 290
+CG in y: 55
+CG in z: 0.1
+Track width: 1.208
+Wheelbase: 1.25
+W: 0.4
+Suspension: /
+Coefficient of Friction: 1.4
+Aerodynamics: /
+Air density: 1.225
+Frontal area: 1.2
+Coefficient of DF: 3.5
+Coefficient of Drag: 1.7
+CoP in y: 60
+CoP in z: 0.1
+Drivetrain: /
+Tire radius: 0.228
+Max Power: 80000000
+Max RPM: 7600
+Gear ratio: 5.45
+Max torque: 90
+Total time: 16.17379562939213
